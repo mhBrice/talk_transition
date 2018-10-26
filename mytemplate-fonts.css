@@ -1,0 +1,24 @@
+/* Code font */
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic');
+/* Title code */
+@import url('https://fonts.googleapis.com/css?family=Anton|Bevan|Black+Han+Sans|Luckiest+Guy|Bowlby+One|Lalezar');
+/* Body */
+@import url('https://fonts.googleapis.com/css?family=Catamaran:500');
+
+
+body {
+  font-family: 'Catamaran', sans-serif;
+}
+
+h1 {
+  font-family: 'Catamaran', sans-serif;
+  font-weight: 400;
+}
+
+.maintitle {
+  font-family: 'Catamaran', sans-serif;
+}
+
+.remark-code, .remark-inline-code {
+    font-family: 'Ubuntu Mono';
+}

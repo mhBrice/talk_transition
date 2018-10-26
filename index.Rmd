@@ -1,0 +1,285 @@
+---
+title: "Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré"
+author: "Marie-Hélène Brice, Pierre Legendre & Marie-Josée Fortin"
+
+output:
+  xaringan::moon_reader:
+    includes:
+      in_header: mytemplate-header.html
+    lib_dir: assets
+    seal: true
+    css: ["default", "mytemplate.css", "mytemplate-fonts.css"]
+    nature:
+      countIncrementalSlides: false    
+      beforeInit: "mytemplate-macros.js"
+
+---
+```{r setup, echo = F}
+knitr::opts_chunk$set(
+  comment = "#",
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  echo = FALSE,
+  fig.width=5, fig.height=5,
+  fig.align = 'center'
+)
+```
+
+```{r, echo = F}
+options(repos=structure(c(CRAN="http://cran.r-project.org")))
+```
+
+## Déplacement des niches
+
+.center[
+![:scale 91%](images/niche_move1.png)
+]
+
+---
+## Déplacement des niches
+
+.center[
+![:scale 93%](images/niche_move2.png)
+]
+
+---
+## Déplacement des niches
+
+.center[
+![:scale 93%](images/niche_move3.png)
+]
+
+---
+## Déplacement des niches
+
+Future enveloppe climatique de l'Érable à sucre (2071-2100)
+
+.center[
+![:scale 60%](images/mckenney_maple.gif)
+]
+
+.footnote[McKenney et al. 2007. BioScience.]
+
+---
+## Contraintes à la migration
+
+![](images/animated_tree.gif)
+
+
+---
+## États alternatifs stables
+
+<br>
+
+.pull-left[
+![](images/alternative_state1.png)]
+
+.pull-right[
+![](images/alternative_state2.png)]
+
+<br>
+
+.center[![:scale 80%](images/alternative_state_legend.png)]
+
+.footnote[Johnstone et al. 2016]
+
+---
+### Réponses des écosystèmes aux changements
+
+.center[![:scale 90%](images/state_shift.png)]
+
+.footnote[Scheffer & Carpenter 2003]
+
+---
+## ![:scale 1.1em](images/target.svg)bjectifs
+
+
+**Décrire la dynamique de transition des communautés forestières du Québec au cours des dernières décennies et identifier les éléments déclencheurs.**
+
+
+> Est-ce qu’il y a eu des transitions d’état dans les forêts au cours des dernières décennies?
+> 
+>  Quels facteurs environnementaux déclenchent ces transitions de communautés? 
+> 
+>  Est-ce que les perturbations peuvent accélérer certaines transitions? 
+
+
+.center[.image-holder[
+![:scale 230px](images/mixed.jpg) 
+![:scale 40px](images/right-arrow.svg) 
+![:scale 230px](images/pioneer.jpg) 
+![:scale 40px](images/right-arrow.svg) 
+![:scale 230px](images/temperate.jpg)
+]]
+
+
+
+---
+## Hypothèses
+
+.center[
+![:scale 80%](images/hypo1.png)
+]
+--
+.center[
+![:scale 80%](images/hypo2.png)
+]
+--
+.center[
+![:scale 80%](images/hypo3.png)
+]
+
+---
+## Données
+
+Inventaires forestiers du Québec Méridional 	
+  - Près de 12500 parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2016 (par le MFFPQ) 
+  - 6381 parcelles inventoriées au moins 2 fois chacune
+
+
+.center[
+![:scale 80%](images/map_plots.png)
+]
+
+
+
+---
+## Données
+
+.center[
+![:scale 80%](images/diag_trans_pics.png)
+]
+
+---
+## Transitions observées
+
+Pourcentage de transitions entre le premier et le dernier inventaire 
+
+
+.center[
+![:scale 75%](images/diag_trans_pourcen.png)
+]
+
+
+---
+## Transitions observées
+
+<br>
+
+.center[
+![:scale 85%](images/flow_trans_Boreal.png)
+]
+
+---
+## Transitions observées
+
+<br>
+
+.center[
+![:scale 85%](images/flow_trans_Pioneer.png)
+]
+
+---
+## Transitions observées
+
+<br>
+
+.center[
+![:scale 85%](images/flow_trans_Temperate.png)
+]
+
+---
+## Transitions observées
+
+<br>
+
+.center[
+![:scale 85%](images/flow_trans_Mixed.png)
+]
+
+
+---
+## Modèle de transition
+
+.center[
+![:scale 52%](images/multinom_all_trans.png)
+
+$P(Etat_0 = j | Etat_n = i, Perturbation, Climat, Local)$
+]
+
+--
+
+**Chaque probabilité de transition dépend de: **
+
+| Perturbations           | Climat                | Local & voisinage      |
+| ----------------------- |-----------------------| -----------------------|
+|![:scale 1.1em](images/fire.svg) Feux | ![:scale 1.2em](images/thermometer.svg) Température à *t1* | ![:faic](clock-o) Années depuis *t1* |
+|![:faic](bug) Épidémies   | ![:scale 1.1em](images/cloud.svg) Précipitation à *t1* | ![:scale 1.1em](images/old.svg) Âge du peuplement |
+|![:scale 1.2em](images/stump.svg) Coupes | ![:scale 1.2em](images/cactus.svg) ∆Température/an | ![:scale 1.1em](images/soil.svg) Type de sol |
+|![:scale 1.1em](images/wind.svg) Chablis | ![:scale 1.3em](images/flood1.svg) ∆Précipitation/an | ![:faic](globe) Domaines bioclimatiques |
+
+
+
+
+---
+## Déclencheurs des transitions
+
+.center[
+![:scale 80%](images/diag_trans_mixed.png)
+]
+
+
+---
+## Influence de l'âge du peuplement
+
+.center[![:scale 82%](images/effect_age.png)]
+
+---
+## Influence du voisinage 
+
+.center[![:scale 82%](images/effect_region.png)]
+
+---
+## Influence du sol
+
+.center[![:scale 82%](images/effect_humus.png)]
+
+---
+## Influence du sol
+
+.center[![:scale 82%](images/effect_humus.png)]
+
+---
+## Influence des perturbations naturelles
+
+.center[![:scale 82%](images/effect_nat0.png)]
+
+---
+## Influence des perturbations naturelles
+
+.center[![:scale 82%](images/effect_nat1.png)]
+
+---
+## Influence des perturbations naturelles
+
+.center[![:scale 82%](images/effect_nat2.png)]
+
+---
+## Influence de la coupe forestière
+
+.center[![:scale 82%](images/effect_harv0.png)]
+
+---
+## Influence de la coupe forestière
+
+.center[![:scale 82%](images/effect_harv1.png) ]
+
+---
+## Influence de la coupe forestière
+
+.center[![:scale 82%](images/effect_harv2.png)]
+
+---
+## Conclusions
+
