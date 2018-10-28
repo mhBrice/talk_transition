@@ -257,7 +257,7 @@ plotmat(M, pos = c(2, 2), curve = curve.mat, name = gr.name, lwd = 1, relsize=0.
         self.cex = 0.5, self.shifty = c(.06,.06,-.06,-.06), self.shiftx = c(-0.1, 0.1, -0.1, 0.1))
 
 
-### TRANSITION FLOW
+### TRANSITION FLOW ####
 
 pos <- coordinates(pos = 4, my = -.4)
 pos1 <- c(.5,.9)
@@ -265,22 +265,27 @@ curv1 <- c(.4,.48,.52,.6)
 curv2 <- c(.2,.4,.6,.8)
 
 for(st in 1:4) {
-  png(paste0("images/flow_trans_", gr.name[st], ".png"), res=300, 
-      width = 6, height = 3, units = 'in', bg = "transparent", type='cairo')
+  png(paste0("images/flow_trans_", gr.name[st], ".png"), res=300,
+      width = 5, height = 2.8, units = 'in', bg = "transparent", type='cairo')
   par(mar=c(0,0,0,0))
   openplotmat(main = "")
   for(i in 1:4) {
     xspline(x = c(pos1[1], curv1[i], curv2[i], pos[i,1]), 
-            y = c(pos1[2]-.05, 0.5, 0.3, pos[i,2]), 
+            y = c(pos1[2]-.02, 0.5, 0.3, pos[i,2]), 
             s = 1, lwd = M.perc[i,st]/4, border = "grey40")
   }
   
   
-  textrect(mid=pos1, radx = 0.1,rady = 0.07, lab = gr.name[st], cex = 1, font = 2, 
+  textrect(mid=pos1, radx = 0.11, rady = 0.07, lab = gr.name[st], cex = 1, font = 2, 
            col = "white", box.col = pal.gr[st], lcol = pal.gr[st], shadow.size = 0.005)
   for (i in 1:4) {
-    textrect(mid=pos[i,], radx = 0.1,rady = 0.07, lab = gr.name[i], cex = 1, font = 2, 
+    textrect(mid=pos[i,], radx = 0.11, rady = 0.07, lab = gr.name[i], cex = 1, font = 2, 
              col = "white", box.col = pal.gr[i], lcol = pal.gr[i], shadow.size = 0.005)
+
+    if(i %in% 1:2) l = -.05
+    if(i %in% 3:4) l = .05
+    textplain(mid = pos[i,]+c(l,.1), lab = paste0(M.perc[i,st], "%"), 
+              cex=.9, font=2, col = "grey25")
   }
   dev.off()
 }

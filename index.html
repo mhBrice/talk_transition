@@ -1,30 +1,25 @@
----
-title: "Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré"
-author: "Marie-Hélène Brice, Pierre Legendre & Marie-Josée Fortin"
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin" />
+    <link href="assets/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/academicons-1.8.1/css/academicons.min.css">
+    <link rel="stylesheet" href="mytemplate.css" type="text/css" />
+    <link rel="stylesheet" href="mytemplate-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
 
-output:
-  xaringan::moon_reader:
-    includes:
-      in_header: mytemplate-header.html
-    lib_dir: assets
-    seal: true
-    css: ["default", "mytemplate.css", "mytemplate-fonts.css"]
-    nature:
-      countIncrementalSlides: false    
-      beforeInit: "mytemplate-macros.js"
+# Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré
+### Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin
 
 ---
-```{r setup, echo = F}
-knitr::opts_chunk$set(
-  comment = "#",
-  collapse = TRUE,
-  warning = FALSE,
-  message = FALSE,
-  echo = FALSE,
-  fig.width=5, fig.height=5,
-  fig.align = 'center'
-)
-```
+
+
 
 
 ## Déplacement des niches
@@ -68,7 +63,7 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ---
 ## États alternatifs stables
 
-<br>
+&lt;br&gt;
 
 .pull-left[
 ![](images/alternative_state1.png)]
@@ -76,7 +71,7 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 .pull-right[
 ![](images/alternative_state2.png)]
 
-<br>
+&lt;br&gt;
 
 .center[![:scale 80%](images/alternative_state_legend.png)]
 
@@ -87,7 +82,7 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 .center[![:scale 90%](images/state_shift.png)]
 
-.footnote[Scheffer & Carpenter 2003]
+.footnote[Scheffer &amp; Carpenter 2003]
 
 ---
 ## ![:scale 1.1em](images/target.svg)bjectifs
@@ -96,11 +91,11 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 **Décrire la dynamique de transition des communautés forestières du Québec au cours des dernières décennies et identifier les éléments déclencheurs.**
 
 
-> Est-ce qu’il y a eu des transitions d’état dans les forêts au cours des dernières décennies?
-> 
->  Quels facteurs environnementaux déclenchent ces transitions de communautés? 
-> 
->  Est-ce que les perturbations peuvent accélérer certaines transitions? 
+&gt; Est-ce qu’il y a eu des transitions d’état dans les forêts au cours des dernières décennies?
+&gt; 
+&gt;  Quels facteurs environnementaux déclenchent ces transitions de communautés? 
+&gt; 
+&gt;  Est-ce que les perturbations peuvent accélérer certaines transitions? 
 
 
 .center[.image-holder[
@@ -164,10 +159,10 @@ Probabilité de transitions entre le premier et le dernier inventaire
 ## Transitions observées
 
 
-![:scale 49%](images/flow_trans_Boreal.png) &nbsp; ![:scale 49%](images/flow_trans_Mixed.png) 
+![:scale 49%](images/flow_trans_Boreal.png) &amp;nbsp; ![:scale 49%](images/flow_trans_Mixed.png) 
 
 
-![:scale 49%](images/flow_trans_Pioneer.png) &nbsp; ![:scale 49%](images/flow_trans_Temperate.png) 
+![:scale 49%](images/flow_trans_Pioneer.png) &amp;nbsp; ![:scale 49%](images/flow_trans_Temperate.png) 
 
 ---
 ## Modèle de transition
@@ -175,14 +170,14 @@ Probabilité de transitions entre le premier et le dernier inventaire
 .center[
 ![:scale 48%](images/multinom_all_trans.png)
 
-$$P(Etat_0 = j | Etat_n = i, Perturbation, Climat, Local)$$
+`$$P(Etat_0 = j | Etat_n = i, Perturbation, Climat, Local)$$`
 ]
 
 --
 
 Chaque probabilité de transition dépend de: 
 
-| Perturbations           | Climat                | Local & voisinage      |
+| Perturbations           | Climat                | Local &amp; voisinage      |
 | ----------------------- |-----------------------| -----------------------|
 |![:scale 1.1em](images/fire.svg) Feux | ![:scale 1.2em](images/thermometer.svg) Température à *t1* | ![:faic](clock-o) Années depuis *t1* |
 |![:faic](bug) Épidémies   | ![:scale 1.1em](images/cloud.svg) Précipitation à *t1* | ![:scale 1.1em](images/old.svg) Âge du peuplement |
@@ -241,4 +236,40 @@ Chaque probabilité de transition dépend de:
 
 - Les changements climatiques favorise: les transition Mixte ![:faic](arrow-right) Tempérée, mais pas Boréal ![:faic](arrow-right) Mixte
 
-- 
+-
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="mytemplate-macros.js"></script>
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
