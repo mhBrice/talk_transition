@@ -179,10 +179,9 @@ M <- matrix(nrow = 4, ncol = 4, byrow = TRUE, data = table(Trans.map$From, Trans
 M.perc <- t(round(t(M)/colSums(M)*100, 0))
 
 
-# quartz(width=8, height=6)
 png(paste0("images/diag_trans_pourcen.png"), res=300, 
     width = 8, height = 6, units = 'in', bg = "transparent", type='cairo')
-
+# quartz(width=8, height=6)
 par(mar=c(0,0,0,0))
 pos.box <- cbind (c(0.5, 0.2, 0.8, 0.5), c(0.8, 0.5, 0.5, 0.2))
 plotmat(M.perc, pos = pos.box, curve = 0.07, name = gr.name, lwd = 2, relsize=.98,
@@ -190,17 +189,17 @@ plotmat(M.perc, pos = pos.box, curve = 0.07, name = gr.name, lwd = 2, relsize=.9
         box.lwd = 0.1, box.type = "rect", shadow.size = 0.005,
         box.prop = 0.4, box.size = 0.1, box.col = pal.gr,
         arr.length=.2, arr.width=.15,  arr.type ="curved",
-        arr.col ="grey40", arr.lcol ="grey40",
+        arr.col ="grey40", arr.lcol ="grey40", 
         self.cex = 0.6, self.shifty = c(.07,0,0,-.07), self.shiftx = c(0,-.14,.14,0), self.lwd = 2)
 
 dev.off()
 
 
 
-# quartz(width=8, height=6)
+
 png(paste0("images/diag_trans_mixed.png"), res=300, 
     width = 8, height = 6, units = 'in', bg = "transparent", type='cairo')
-
+# quartz(width=8, height=6)
 par(mar=c(0,0,0,0))
 pos.box <- cbind (c(0.5, 0.2, 0.8, 0.5), 
                   c(0.8, 0.5, 0.5, 0.2))
@@ -260,7 +259,7 @@ plotmat(M, pos = c(2, 2), curve = curve.mat, name = gr.name, lwd = 1, relsize=0.
 ### TRANSITION FLOW ####
 
 pos <- coordinates(pos = 4, my = -.4)
-pos1 <- c(.5,.9)
+pos1 <- c(.5,.85)
 curv1 <- c(.4,.48,.52,.6)
 curv2 <- c(.2,.4,.6,.8)
 
@@ -278,6 +277,8 @@ for(st in 1:4) {
   
   textrect(mid=pos1, radx = 0.11, rady = 0.07, lab = gr.name[st], cex = 1, font = 2, 
            col = "white", box.col = pal.gr[st], lcol = pal.gr[st], shadow.size = 0.005)
+  textplain(mid = pos1 + c(0,.1), lab = paste0("n = ", colSums(M)[st]), cex = .8, font = 2)
+  
   for (i in 1:4) {
     textrect(mid=pos[i,], radx = 0.11, rady = 0.07, lab = gr.name[i], cex = 1, font = 2, 
              col = "white", box.col = pal.gr[i], lcol = pal.gr[i], shadow.size = 0.005)
