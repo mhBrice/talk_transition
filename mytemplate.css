@@ -129,6 +129,7 @@ a, a > code {
 .pull-left {
   float: left;
   width: 49%;
+  padding-left: 10px;
 }
 .pull-right {
   float: right;
@@ -162,6 +163,7 @@ a, a > code {
 .remark-slide-content blockquote {
   font-size: 1em;
   padding-left: 1em;
+  /*background: #f9f9f9;*/
 }
 
 
@@ -190,7 +192,7 @@ table {
 table, td, th {
   border-collapse: collapse;
   width: auto;
-  padding: 5px 50px;
+  padding: 5px 30px;
   text-align: left;
   background-color: transparent;
 }
