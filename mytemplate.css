@@ -3,58 +3,65 @@
 }
 
 .remark-slide-content {
-  background-image: url("images/background_slide2.png");
-  background-size: contain;
+  background-image: url("images/background_slide3.png");
+  background-size: cover;
   padding: .2em;
   margin: .15em;
-  font-size: 24px;
+  font-size: 23px;
   color: #404940;
 }
+
+
 
 .remark-slide-number {
   font-size: 12pt;
   margin-bottom: -11.6px;
   margin-right: 10px;
-  color: #F7FCF8;
+  color: #404940;
   opacity: 0.6; /* default: 0.5 */
 }
 
 
 .remark-slide-content p, .remark-slide-content ul, .remark-slide-content ol {
-  margin: .2em 1em;
+  margin: .2em 1.5em;
 }
 
+
  /* Header */
+
 .remark-slide-content h1 {
   font-size: 48px;
   border-bottom: 3px solid;
   margin: 0em .5em;
+  color: #ebedec;
 }
 
 .remark-slide-content h2 {
-  font-size: 46px;
+  font-size: 42px;
   margin: 0em .5em;
+  color: #ebedec;
+  padding-bottom: .8em;
 }
 
 .remark-slide-content h3 {
-  font-size: 42px;
+  font-size: 38px;
   margin: 0em .6em;
 }
 
 .remark-slide-content h4 {
-  font-size: 36px;
-  margin: 0em .7em;
-}
-
-.remark-slide-content h5 {
   font-size: 32px;
   margin: 0em .8em;
 }
 
+.remark-slide-content h5 {
+  font-size: 26px;
+  margin: 0em 1em;
+}
+
 
 .remark-slide-content h6 {
-  font-size: 28px;
-  margin: 0em .9em;
+  font-size: 24px;
+  margin: 0em 1em;
 }
 
 /* Code */
@@ -91,7 +98,6 @@ a, a > code {
 /* special text */
 .alert {
   color: #c7254e;
-  font-weight: bold;
 }
 
 .comment {
@@ -162,7 +168,9 @@ a, a > code {
 /* Blockquote */
 .remark-slide-content blockquote {
   font-size: 1em;
-  padding-left: 1em;
+  padding-left: 0em;
+  margin-top: 2px;
+  margin-bottom: 2px;
   /*background: #f9f9f9;*/
 }
 

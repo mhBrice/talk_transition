@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré</title>
-    <meta charset="utf-8">
+    <title>Les perturbations modérées catalysent les transitions forestières dans l’écotone boréal-tempéré</title>
+    <meta charset="utf-8" />
     <meta name="author" content="Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin" />
     <link href="assets/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -14,10 +14,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré
+# Les perturbations modérées catalysent les transitions forestières dans l’écotone boréal-tempéré
 ### Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin
 
 ---
+
+
+
+
+
 
 
 
@@ -57,12 +62,12 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ---
 ## Contraintes à la migration
 
-&lt;!-- ![](images/animated_tree.gif)--&gt;
 - Démographie lente
 - Dispersion limitée
 - Compétition interspécifique
+- Hétérogénéité du sol
 
-.center[![:scale 88%](images/niche_vs_tree.png)]
+.center[![:scale 87%](images/niche_vs_tree.png)]
 
 ---
 ## États alternatifs stables
@@ -81,12 +86,6 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 .footnote[Johnstone et al. 2016]
 
----
-### Réponses des écosystèmes aux changements
-
-.center[![:scale 90%](images/state_shift.png)]
-
-.footnote[Scheffer &amp; Carpenter 2003]
 
 ---
 ## ![:scale 1.1em](images/target.svg)bjectifs
@@ -95,18 +94,20 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 **Comprendre les contraintes et les moteurs sous-jacents de la dynamique de transition des communautés forestières du Québec.**
 
 
-&gt; .image-holder[ ![:scale 1.2em](images/one.svg) Quelles ont été les transitions d’état dans les forêts au cours des dernières décennies? ]
-&gt; 
-&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Quels facteurs environnementaux déclenchent ces transitions de communautés? ]
-&gt; 
-&gt; .image-holder[ ![:scale 1.2em](images/three.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+&gt; .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
+&gt;
+&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+&gt;
+&gt; .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre potentiel et la dynamique transitoire ? ]
 
+
+&lt;br&gt;
 
 .center[.image-holder[
-![:scale 230px](images/mixed.jpg) 
-![:scale 40px](images/right-arrow.svg) 
-![:scale 230px](images/pioneer.jpg) 
-![:scale 40px](images/right-arrow.svg) 
+![:scale 230px](images/mixed.jpg)
+![:scale 40px](images/right-arrow.svg)
+![:scale 230px](images/pioneer.jpg)
+![:scale 40px](images/right-arrow.svg)
 ![:scale 230px](images/temperate.jpg)
 ]]
 
@@ -131,12 +132,12 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ## Données
 
 Inventaires forestiers du Québec Méridional 	
-  - 12000+ parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2016 (par le MFFPQ) 
-  - Sélection de 6381 parcelles inventoriées au moins 2 fois chacune
+  - 12000+ parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2016 (par le MFFPQ)
+  - Sélection de 10,388 parcelles inventoriées au moins 2 fois chacune
 
 
 .center[
-![:scale 80%](images/map_plots.png)
+![:scale 80%](images/fig1_region.png)
 ]
 
 
@@ -145,171 +146,275 @@ Inventaires forestiers du Québec Méridional
 ## Données
 
 .center[
-![:scale 80%](images/diag_trans_pics.png)
+![:scale 85%](images/diag_trans_pics.png)
 ]
+
+
+---
+## Modèle
+
+##### Modèle de Markov multi-états à temps continu
+
+&lt;img src="index_files/figure-html/trans_time-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+- Processus de Markov: 
+  - Les transitions dépendent de l'état actuel, pas des états antérieurs
+
+- Temps continu: 
+  - intervalle de temps irrégulier, avec plusieurs transitions possibles durant un intervalle
+  - le moment exact de la transition n'est pas connu
+
+---
+## Modèle
+
+##### Modèle de Markov multi-états à temps continu
+
+Les transitions entre les états peuvent dépendre de l'environnement:
+
+.left-column[
+&lt;br&gt;
+**Climat**
+
+&lt;br&gt;&lt;br&gt;
+
+**Perturbations**
+
+&lt;br&gt;&lt;br&gt;
+
+**Sol**
+]
+
+.right-column[
+&gt; ![:faic](thermometer-full) Température à `\(t_{i-1}\)`
+
+&gt; ![:scale 1.1em](images/cloud.svg) Indice d'humidité climatique (CMI) à `\(t_{i-1}\)` 
+
+&lt;br&gt;
+&gt; ![:scale 1.1em](images/fire.svg) Perturbations naturelles entre `\(t_{i-1}\)` et `\(t_{i}\)`
+
+&gt; ![:scale 1.2em](images/stump.svg) Coupes entre `\(t_{i-1}\)` et `\(t_{i}\)`
+
+&lt;br&gt;
+&gt; ![:scale 1.1em](images/soil.svg) pH du sol
+
+&gt; ![:faic](tint) Drainage du sol
+
+]
+
+---
+## Modèle
+
+&lt;img src="index_files/figure-html/qmatrix-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+##### Pour les transtions entre tous les états sauf vers Pionnier:
+
+`$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climat} + \beta_{p} \times \textbf{perturbation} + \beta_{s} \times \textbf{sol})$$`
+
+##### Pour les transitions vers Pionnier:
+
+`$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{perturbation})$$`
 
 ---
 ## Transitions observées
 
-Probabilité de transitions entre le premier et le dernier inventaire 
-
-
-.center[
-![:scale 75%](images/diag_trans_pourcen.png)
-]
-
+&lt;img src="index_files/figure-html/trans_diag-1.png" width="684" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Transitions observées
 
+&lt;img src="index_files/figure-html/trans_flow-1.png" width="864" style="display: block; margin: auto;" /&gt;
 
-![:scale 49%](images/flow_trans_Boreal.png) &amp;nbsp; ![:scale 49%](images/flow_trans_Mixed.png) 
 
 
-![:scale 49%](images/flow_trans_Pioneer.png) &amp;nbsp; 
-![:scale 49%](images/flow_trans_Temperate.png) 
 
 ---
-## Modèle de transition
+## Probabilités de transitions
 
-.center[
-![:scale 48%](images/multinom_all_trans.png)
+##### Coupe mineure ou absente
 
-`$$P(Etat_0 = j | Etat_n = i, Climat, Perturbation, Local)$$`
-]
+&lt;img src="index_files/figure-html/pmat_disturb0-1.png" width="720" style="display: block; margin: auto;" /&gt;
 
+
+---
+## Probabilités de transitions
+
+##### Coupes modérées
+
+&lt;img src="index_files/figure-html/pmat_disturb1-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+---
+## Probabilités de transitions
+
+##### Coupes majeures
+
+&lt;img src="index_files/figure-html/pmat_disturb2-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+
+
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées
+&lt;img src="index_files/figure-html/steady_state11-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées 
+&lt;img src="index_files/figure-html/steady_state12-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées
+&lt;img src="index_files/figure-html/steady_state13-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées
+&lt;img src="index_files/figure-html/steady_state14-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Proportion potentielle à l'équilibre
+
+
+
+##### Différentes fréquences de coupes majeures
+
+&lt;img src="index_files/figure-html/steady_state21-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes majeures
+&lt;img src="index_files/figure-html/steady_state22-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes majeures
+&lt;img src="index_files/figure-html/steady_state23-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes majeures
+&lt;img src="index_files/figure-html/steady_state24-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Proportion potentielle à l'équilibre
+
+&lt;br&gt;
+
+
+&lt;img src="index_files/figure-html/barplot1-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+&lt;br&gt;
+&lt;img src="index_files/figure-html/barplot2-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+&lt;br&gt;
+&lt;img src="index_files/figure-html/barplot3-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Proportion potentielle à l'équilibre
+
+&lt;br&gt;
+&lt;img src="index_files/figure-html/barplot4-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Dynamique transitoire
+
+
+
+Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+
+Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
 --
+&lt;img src="index_files/figure-html/barplot_tr0-1.png" width="792" style="display: block; margin: auto;" /&gt;
 
-Chaque probabilité de transition dépend de: 
+---
+## Dynamique transitoire
+
+Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+
+Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
+
+&lt;img src="index_files/figure-html/barplot_tr1-1.png" width="792" style="display: block; margin: auto;" /&gt;
+
+---
+## Dynamique transitoire
+
+Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+
+Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
+
+&lt;img src="index_files/figure-html/barplot_tr2-1.png" width="792" style="display: block; margin: auto;" /&gt;
+
+---
+## Conclusions
 
 
-| Climat                  | Perturbations         | Local &amp; voisinage      |
-| ----------------------- |-----------------------| -----------------------|
-| ![:scale 1.2em](images/thermometer.svg) Température à *t1* |![:scale 1.1em](images/fire.svg) Perturbations naturelles | ![:faic](globe) Domaines bioclimatiques |
-| ![:scale 1.1em](images/cloud.svg) Précipitation à *t1* |![:scale 1.2em](images/stump.svg) Coupes  |  ![:scale 1.1em](images/soil.svg) Type de sol   |
-| ![:scale 1.2em](images/cactus.svg) ∆Température/an | ![:scale 1.1em](images/old.svg) Âge du peuplement  |  ![:faic](clock-o) Années depuis *t1* |
-| ![:scale 1.3em](images/flood1.svg) ∆Précipitation/an | &amp;nbsp;  | &amp;nbsp;   |
+&gt; .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
+
+.alert[Oui, mais difficilement sans perturbations.]
+
+&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+
+.alert[Oui. Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré et Boréal-Mixte.]
+
+&gt; .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre et la dynamique transitoire ?]
+
+.alert[Les perturbations modérées, pas majeures, tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord.]
+
+.alert[Les perturbations modérées, pas majeures, accélèrent la dynamique transitoire.]
 
 
 
 ---
-## Déclencheurs des transitions
+## Conclusions
+
+États alternatifs stables **sans** changements climatiques
+
+&lt;br&gt;
 
 .center[
-![](images/diag_trans_mixed2.png)
-]
-
-
----
-## Influence du changement climatique
-
-.center[![:scale 92%](images/effect_cc0.png)]
-
----
-## Influence du changement climatique
-
-.center[![:scale 92%](images/effect_cc1.png)]
-
----
-## Influence du changement climatique
-
-.center[![:scale 92%](images/effect_cc2.png)]
-
-
----
-## Influence du voisinage 
-
-.center[![:scale 92%](images/effect_region.png)]
-
----
-## Influence du sol
-
-.center[![:scale 92%](images/effect_humus.png)]
-
----
-## Influence de l'âge du peuplement
-
-.center[![:scale 92%](images/effect_age.png)]
-
----
-## Influence des perturbations naturelles
-
-.center[![:scale 92%](images/effect_nat0.png)]
-
----
-## Influence des perturbations naturelles
-
-.center[![:scale 92%](images/effect_nat1.png)]
-
----
-## Influence des perturbations naturelles
-
-.center[![:scale 92%](images/effect_nat2.png)]
-
----
-## Influence de la coupe forestière
-
-.center[![:scale 92%](images/effect_harv0.png)]
-
----
-## Influence de la coupe forestière
-
-.center[![:scale 92%](images/effect_harv1.png)]
-
----
-## Influence de la coupe forestière
-
-.center[![:scale 92%](images/effect_harv2.png)]
-
-
-
----
-## Conclusions
-
-&gt; .image-holder[ ![:scale 1.2em](images/one.svg) Quelles ont été les transitions d’état dans les forêts au cours des dernières décennies?]
-
-.center[ ![:scale 60%](images/diag_trans_pourcen.png) ]
-
----
-## Conclusions
-
-&gt; .image-holder[  ![:scale 1.2em](images/two.svg) Quels facteurs environnementaux déclenchent ces transitions de communautés? ]
-
-
-.pull-left[
-**Contrainte à la migration**
-
-![:scale 1.1em](images/soil.svg) Conditions édaphiques
-
-![:scale 1.3em](images/flood1.svg) Précipitations
-
-![:faic](tree) Compétition par les espèces boréales
-]
-
-
-.pull-right[
-**Favorable à la migration**
-
-![:scale 1.1em](images/old.svg) Vieillissement du peuplement
-
-![:scale 1.2em](images/cactus.svg) Réchauffement
-
-![:scale 1.1em](images/fire.svg) Perturbations naturelles et anthropiques à court terme... mais à long terme?
+![:scale 75%](images/ballncup1.png)
 ]
 
 ---
 ## Conclusions
 
+États alternatifs stables **avec** changements climatiques
 
-&gt; .image-holder[ ![:scale 1.2em](images/three.svg) &amp;nbsp; Est-ce que les perturbations peuvent accélérer certaines transitions?]
-
+&lt;br&gt;
 
 .center[
-![:scale 62%](images/conclu_age_dist.png)
-
-![:scale 70%](images/state_shift_conclu.png)
+![:scale 75%](images/ballncup2.png)
 ]
+
+
+
+
+---
+## Résultats du modèle msm
+
+&lt;img src="index_files/figure-html/coef-1.png" width="684" style="display: block; margin: auto;" /&gt;
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script src="mytemplate-macros.js"></script>
 <script>var slideshow = remark.create({
@@ -318,26 +423,79 @@ Chaque probabilité de transition dépend de:
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
   }
-});
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

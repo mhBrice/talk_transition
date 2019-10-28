@@ -1,5 +1,5 @@
 ---
-title: "Dynamique de transition des communautés forestières dans l’écotone boréal-tempéré"
+title: "Les perturbations modérées catalysent les transitions forestières dans l’écotone boréal-tempéré"
 author: "Marie-Hélène Brice, Pierre Legendre & Marie-Josée Fortin"
 
 output:
@@ -12,9 +12,9 @@ output:
     nature:
       countIncrementalSlides: false    
       beforeInit: "mytemplate-macros.js"
-
 ---
-```{r setup, echo = F}
+
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
   comment = "#",
   collapse = TRUE,
@@ -22,8 +22,37 @@ knitr::opts_chunk$set(
   message = FALSE,
   echo = FALSE,
   fig.width=5, fig.height=5,
-  fig.align = 'center'
+  fig.align = 'center',
+  fig.retina = 3
 )
+```
+
+```{r library, include = FALSE}
+library(graphicsutils)
+library(diagram)
+library(dplyr)
+library(msm)
+library(latex2exp)
+library(scales)
+source("funs.R")
+```
+
+```{r data, include = FALSE}
+msm_glb <- readRDS("data/msm_glb.RDS")
+states_ba <- readRDS("data/states_envba.RDS") %>% arrange(plot_id, year_measured)
+
+env_sc <- scale(states_ba[,c("sTP", "CMI", "DRAIN", "PH_HUMUS")])
+
+states <- c("Boréal", "Mixte", "Pionnier", "Tempéré")
+
+st_col <- c("#158282", "#A1BD93", "#FEAC19", "#D43650")
+
+ll_mixed <- which(states_ba$ecoreg3=="Mixed")
+mixed_mean <- as.list(apply(env_sc[ll_mixed,], 2, mean))
+covar_log <- list(mixed_mean,
+                  c(logging1 = 1, mixed_mean),
+                  c(logging2 = 1, mixed_mean))
+
 ```
 
 
@@ -62,12 +91,12 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ---
 ## Contraintes à la migration
 
-<!-- ![](images/animated_tree.gif)-->
 - Démographie lente
 - Dispersion limitée
 - Compétition interspécifique
+- Hétérogénéité du sol
 
-.center[![:scale 88%](images/niche_vs_tree.png)]
+.center[![:scale 87%](images/niche_vs_tree.png)]
 
 ---
 ## États alternatifs stables
@@ -86,12 +115,6 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 .footnote[Johnstone et al. 2016]
 
----
-### Réponses des écosystèmes aux changements
-
-.center[![:scale 90%](images/state_shift.png)]
-
-.footnote[Scheffer & Carpenter 2003]
 
 ---
 ## ![:scale 1.1em](images/target.svg)bjectifs
@@ -100,18 +123,20 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 **Comprendre les contraintes et les moteurs sous-jacents de la dynamique de transition des communautés forestières du Québec.**
 
 
-> .image-holder[ ![:scale 1.2em](images/one.svg) Quelles ont été les transitions d’état dans les forêts au cours des dernières décennies? ]
-> 
-> .image-holder[ ![:scale 1.2em](images/two.svg) Quels facteurs environnementaux déclenchent ces transitions de communautés? ]
-> 
-> .image-holder[ ![:scale 1.2em](images/three.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+> .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
+>
+> .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+>
+> .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre potentiel et la dynamique transitoire ? ]
 
+
+<br>
 
 .center[.image-holder[
-![:scale 230px](images/mixed.jpg) 
-![:scale 40px](images/right-arrow.svg) 
-![:scale 230px](images/pioneer.jpg) 
-![:scale 40px](images/right-arrow.svg) 
+![:scale 230px](images/mixed.jpg)
+![:scale 40px](images/right-arrow.svg)
+![:scale 230px](images/pioneer.jpg)
+![:scale 40px](images/right-arrow.svg)
 ![:scale 230px](images/temperate.jpg)
 ]]
 
@@ -136,12 +161,12 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ## Données
 
 Inventaires forestiers du Québec Méridional 	
-  - 12000+ parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2016 (par le MFFPQ) 
-  - Sélection de 6381 parcelles inventoriées au moins 2 fois chacune
+  - 12000+ parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2016 (par le MFFPQ)
+  - Sélection de 10,388 parcelles inventoriées au moins 2 fois chacune
 
 
 .center[
-![:scale 80%](images/map_plots.png)
+![:scale 80%](images/fig1_region.png)
 ]
 
 
@@ -150,167 +175,504 @@ Inventaires forestiers du Québec Méridional
 ## Données
 
 .center[
-![:scale 80%](images/diag_trans_pics.png)
+![:scale 85%](images/diag_trans_pics.png)
 ]
+
+
+---
+## Modèle
+
+##### Modèle de Markov multi-états à temps continu
+
+```{r trans_time, fig.width=7, fig.height=3.5}
+pos <- coordinates(pos = 4)
+pos[,1] <- pos[,1] + c(-.015,0.025,-.01,0)
+labs <- c(expression(bold('État'[0])),
+          expression(bold('État'[1])),
+          expression(bold('État'["..."])),
+          expression(bold('État'["n"])))
+curv <- c(-0.6, -0.8, -0.7)
+
+par(mar=c(0,0,0,0))
+openplotmat(main = "")
+for (i in 1:4) {
+  textellipse(mid=pos[i,], radx = 0.1, lab = labs[i], cex = 2,
+              col = '#404940', shadow.col='#98B283', shadow.size = 0.005)
+  }
+for (i in 1:3) {
+  curvedarrow(from = pos[i, ] + c(.01, .12), to = pos[i+1, ] + c(-.01, .12),
+              curve = curv[i], arr.type = "triangle", arr.length=.4, arr.width=.5,
+              arr.pos = .5, lwd = 4, lcol ="grey40", arr.col ="grey40")}
+
+straightarrow(from = pos[1, ] - c(0, .22), to = pos[4, ] - c(0, .22),
+              arr.type = "triangle", arr.pos = 1, lwd = 15, lcol ="grey60", arr.col ="grey60",
+              arr.length=.7, arr.width=.7)
+textplain(pos[4, ] - c(0, .35), lab = "Time", cex = 2)
+```
+
+- Processus de Markov: 
+  - Les transitions dépendent de l'état actuel, pas des états antérieurs
+
+- Temps continu: 
+  - intervalle de temps irrégulier, avec plusieurs transitions possibles durant un intervalle
+  - le moment exact de la transition n'est pas connu
+
+---
+## Modèle
+
+##### Modèle de Markov multi-états à temps continu
+
+Les transitions entre les états peuvent dépendre de l'environnement:
+
+.left-column[
+<br>
+**Climat**
+
+<br><br>
+
+**Perturbations**
+
+<br><br>
+
+**Sol**
+]
+
+.right-column[
+> ![:faic](thermometer-full) Température à $t_{i-1}$
+
+> ![:scale 1.1em](images/cloud.svg) Indice d'humidité climatique (CMI) à $t_{i-1}$ 
+
+<br>
+> ![:scale 1.1em](images/fire.svg) Perturbations naturelles entre $t_{i-1}$ et $t_{i}$
+
+> ![:scale 1.2em](images/stump.svg) Coupes entre $t_{i-1}$ et $t_{i}$
+
+<br>
+> ![:scale 1.1em](images/soil.svg) pH du sol
+
+> ![:faic](tint) Drainage du sol
+
+]
+
+---
+## Modèle
+
+```{r qmatrix, fig.height=3, fig.width=5}
+qmat <- c("$-\\sum_{s \\neq B} q_{Bs}$","q_{BM}", "q_{BP}", 0,
+          "q_{MB}", "$-\\sum_{s \\neq M} q_{Ms}$", "q_{MP}", "q_{MT}",
+          "q_{PB}", "q_{PM}", "$-\\sum_{s \\neq P} q_{Ps}$", "q_{PT}",
+          0, "q_{TM}", "q_{TP}", "$-\\sum_{s \\neq T} q_{Ts}$")
+
+par(mar=c(0,0,0,0))
+plot0(xlim = c(0,9), ylim = c(1,9), xpd = NA, yaxs = "i")
+text(.2, 5, expression(paste(bold("Q")," =")), cex = 2, col = '#404940')
+lines(c(1,1), c(1.5,8.5))
+lines(c(9,9), c(1.5,8.5))
+text(rep(c(2,4,6,8),4),rep(c(8,6,4,2),ea=4), TeX(qmat), cex = 1.5, col = '#404940')
+```
+
+<br>
+##### Pour les transtions entre tous les états sauf vers Pionnier:
+
+$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climat} + \beta_{p} \times \textbf{perturbation} + \beta_{s} \times \textbf{sol})$$
+
+##### Pour les transitions vers Pionnier:
+
+$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{perturbation})$$
 
 ---
 ## Transitions observées
 
-Probabilité de transitions entre le premier et le dernier inventaire 
+```{r trans_diag, fig.width=9.5, fig.height=7.5}
+trans_nb <- statetable.msm(states_num, plot_id, data = states_ba)
+rownames(trans_nb) <- colnames(trans_nb) <- states
+trans_perc <- t(round(trans_nb/rowSums(trans_nb)*100, 1))
 
+pos.box <- cbind (c(0.5, 0.15, 0.85, 0.5),
+                  c(0.85, 0.5, 0.5, 0.15))
 
-.center[
-![:scale 75%](images/diag_trans_pourcen.png)
-]
+par(mar=c(0.5,0.5,0.5,0.5))
 
+pm <- plotmat(trans_perc, pos = pos.box, curve = 0.07, name = states,
+              lwd = 2, relsize = .9, box.cex = 1.8,
+              cex.txt = 0, txt.col = "white", dtext = .45, txt.font = 2,
+              box.lwd = 0.1, box.type = "rect", shadow.size = 0.005,
+              box.prop = 0.4, box.size = 0.105, box.col = st_col,
+              arr.length=.15, arr.width=.2,  arr.type ="triangle",
+              arr.col ="grey40", arr.lcol = "grey40",
+              self.cex = 0.65, self.lwd = 2,
+              self.shifty = c(.07,0,0,-.07), self.shiftx = c(0,-.14,.14,0),
+              self.arrpos = c(-1,0,3,.5))
+
+pm$arr$TextX[5] <- pm$arr$TextX[5]-.01
+pm$arr$TextX[10] <- pm$arr$TextX[10]+.01
+pm$arr$TextX[6] <- pm$arr$TextX[6]-.015
+pm$arr$TextX[11] <- pm$arr$TextX[11]+.02
+text(pm$arr$TextX, pm$arr$TextY, paste0(pm$arr$Value, "%"), cex = 1.4, font = 2)
+```
 
 ---
 ## Transitions observées
 
+```{r trans_flow, fig.width=12, fig.height=7.5}
+pos <- coordinates(pos = 4, my = -.4)
+pos1 <- c(.5,.85)
+curv1 <- c(.4,.48,.52,.6)
+curv2 <- c(.2,.4,.6,.8)
 
-![:scale 49%](images/flow_trans_Boreal.png) &nbsp; ![:scale 49%](images/flow_trans_Mixed.png) 
+par(mfrow = c(2,2))
+for(st in 1:4) {
+  par(mar=c(0,0,0,0.7))
+  openplotmat(main = "")
+  for(i in 1:4) {
+    xspline(x = c(pos1[1], curv1[i], curv2[i], pos[i,1]),
+            y = c(pos1[2]-.02, 0.5, 0.3, pos[i,2]),
+            s = 1, lwd = trans_perc[i,st]/2.5, border = "grey40")
+  }
 
 
-![:scale 49%](images/flow_trans_Pioneer.png) &nbsp; 
-![:scale 49%](images/flow_trans_Temperate.png) 
+  textrect(mid=pos1, radx = 0.11, rady = 0.07,
+           lab = states[st], cex = 1.6, font = 2,
+           col = "white", box.col = st_col[st], lcol = st_col[st],
+           shadow.size = 0.005)
+  textplain(mid = pos1 + c(0,.1), lab = paste0("n = ", colSums(trans_nb)[st]),
+            cex = 1.3, font = 2)
+
+  for (i in 1:4) {
+    textrect(mid=pos[i,], radx = 0.11, rady = 0.07, lab = states[i],
+             cex = 1.6, font = 2,
+             col = "white", box.col = st_col[i], lcol = st_col[i],
+             shadow.size = 0.005)
+
+    if(i %in% 1:2) l = -.06
+    if(i %in% 3:4) l = .06
+    textplain(mid = pos[i,]+c(l,.1), lab = paste0(trans_perc[i,st], "%"),
+              cex=1.3, font=2, col = "grey25")
+  }
+
+}
+
+```
+
+
+
 
 ---
-## Modèle de transition
+## Probabilités de transitions
 
-.center[
-![:scale 48%](images/multinom_all_trans.png)
+##### Coupe mineure ou absente
 
-$$P(Etat_0 = j | Etat_n = i, Climat, Perturbation, Local)$$
-]
+```{r pmat_disturb0, fig.width=10, fig.height=7}
+plot_pmat(mod = msm_glb, covariates = covar_log[[1]])
+```
 
+
+---
+## Probabilités de transitions
+
+##### Coupes modérées
+
+```{r pmat_disturb1, fig.width=10, fig.height=7}
+plot_pmat(mod = msm_glb, covariates = covar_log[[2]])
+```
+
+---
+## Probabilités de transitions
+
+##### Coupes majeures
+
+```{r pmat_disturb2, fig.width=10, fig.height=7}
+plot_pmat(mod = msm_glb, covariates = covar_log[[3]])
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+```{r prep_SS}
+tp_grad <- seq(-1.9, 1.6, len = 50)
+d_grad <- c(0, .2, .5, 1)
+c_grad <- seq(0.25, 1, len = 4)
+df <- expand.grid(sTP = tp_grad, logging1 = d_grad,
+                  CMI = mixed_mean[[2]],
+                  DRAIN = mixed_mean[[3]],
+                  PH_HUMUS = mixed_mean[[4]])
+
+sc_sTP <- c(attr(scale(states_ba$sTP), "scaled:center"),
+            attr(scale(states_ba$sTP), "scaled:scale"))
+x <- tp_grad * sc_sTP[2] + sc_sTP[1]
+
+tp_mixed <- quantile(states_ba$sTP[states_ba$ecoreg3=="Mixed"], c(.2,.8))
+
+col_bb <- alpha("#158282", c_grad)
+col_tt <- alpha("#D43650", c_grad)
+
+qmats <- apply(df, 1, function(x)
+  qmatrix.msm(msm_glb, covariates = as.list(x), ci = "none"))
+
+SS <- apply(qmats, 2, function(x) steady_state(qmat = matrix(x, 4, 4)))
+
+bb <- SS[1,]
+tt <- SS[4,]
+```
+
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées
+```{r steady_state11, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 1)
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées 
+```{r steady_state12, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 2)
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées
+```{r steady_state13, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 3)
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes modérées
+```{r steady_state14, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 4)
+```
+
+
+---
+## Proportion potentielle à l'équilibre
+
+```{r prep_SS2}
+df <- expand.grid(sTP = tp_grad, logging2 = d_grad,
+                  CMI = mixed_mean[[2]],
+                  DRAIN = mixed_mean[[3]],
+                  PH_HUMUS = mixed_mean[[4]])
+
+qmats <- apply(df, 1, function(x)
+  qmatrix.msm(msm_glb, covariates = as.list(x), ci = "none"))
+
+SS <- apply(qmats, 2, function(x) steady_state(qmat = matrix(x, 4, 4)))
+
+bb <- SS[1,]
+tt <- SS[4,]
+```
+
+##### Différentes fréquences de coupes majeures
+
+```{r steady_state21, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 1)
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes majeures
+```{r steady_state22, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 2)
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes majeures
+```{r steady_state23, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 3)
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+##### Différentes fréquences de coupes majeures
+```{r steady_state24, fig.width=9.2, fig.height=6.5}
+plot_SS(d = 4)
+```
+
+
+---
+## Proportion potentielle à l'équilibre
+
+<br>
+```{r prep_barplot, fig.width=8, fig.height=5}
+init <- table(states_ba$states_ba[states_ba$year_measured>30])
+init <- init/sum(init)
+
+dl <- list(list(logging1 = 0), list(logging1 = 1), list(logging2 = 1))
+qmats <- lapply(dl, function(x)
+  qmatrix.msm(msm_glb, covariates = x, ci = "none"))
+
+SS <- lapply(qmats, function(x) steady_state(qmat = x))
+SS <- rbind(init, do.call(rbind, SS))
+
+colss <- c("#2c7b8f", "#f1ba53","#E38451", "#b5305d")
+lgd <- c("Proportion initiale réelle", 
+         "Équilibre - Coupe mineure", 
+         "Équilibre - Coupe modérée", 
+         "Équilibre - Coupe majeure")
+```
+
+```{r barplot1, fig.width=9.2, fig.height=6.5}
+barplot_index(index = SS, bars = 1, lgd = lgd, colss = colss, ylim = c(0,1),
+              ylab = "Proportion des états")
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+<br>
+```{r barplot2, fig.width=9.2, fig.height=6.5}
+barplot_index(index = SS, bars = 1:2, lgd = lgd, colss = colss,  ylim = c(0,1),
+              ylab = "Proportion des états")
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+<br>
+```{r barplot3, fig.width=9.2, fig.height=6.5}
+barplot_index(index = SS, bars = 1:3, lgd = lgd, colss = colss, ylim = c(0,1),
+              ylab = "Proportion des états")
+```
+
+---
+## Proportion potentielle à l'équilibre
+
+<br>
+```{r barplot4, fig.width=9.2, fig.height=6.5}
+barplot_index(index = SS, bars = 1:4, lgd = lgd, colss = colss, ylim = c(0,1),
+              ylab = "Proportion des états")
+```
+
+---
+## Dynamique transitoire
+
+```{r prep_transient}
+qmats <- lapply(covar_log, function(x)
+  qmatrix.msm(msm_glb, covariates = x, ci = "none"))
+
+### Steady state from qmat
+eig <- lapply(qmats, function(x) eigen(t(x)))
+pi <- lapply(eig, function(x) t(x$vectors[,which(abs(x$values) < 1e-12)]))
+steady <- lapply(pi, function(x) x/sum(x))
+steady <- lapply(steady, "colnames<-", states)
+
+### Convergence to steady state - Damping ratio
+lambda <- lapply(eig, function(x) sort(x$values, decreasing = TRUE)[2])
+
+damping <- lapply(lambda, function(x) exp(abs(x)))
+
+### Half life to steady state
+halflife <- lapply(damping, function(x) log(90)/log(x)) 
+
+### Sojourn time = turnover time from Hill
+
+sojs <- lapply(covar_log, function(x)
+  sojourn.msm(msm_glb, covariates = x, ci = "none")[[1]])
+#sojs_contrib <- mapply("*", sojs, steady, SIMPLIFY = FALSE)
+
+halflife <- unlist(halflife)
+sojs <- do.call(rbind, sojs)
+
+```
+
+Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+
+Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
 --
+```{r barplot_tr0, fig.width=11, fig.height=6.5}
+layout(matrix(c(1,2), 1), widths = c(1,.4))
+barplot_index(index = as.matrix(sojs), bars = 1, 
+              ylab = "Temps de turnover (années)", ylim = c(0,200))
+barplot_halflife(index = halflife, bars = 1, ylim = c(0, 850))
+```
 
-Chaque probabilité de transition dépend de: 
+---
+## Dynamique transitoire
+
+Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+
+Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
+
+```{r barplot_tr1, fig.width=11, fig.height=6.5}
+layout(matrix(c(1,2), 1), widths = c(1,.4))
+barplot_index(index = as.matrix(sojs), bars = 1:2, 
+              ylab = "Temps de turnover (années)", ylim = c(0,200))
+barplot_halflife(index = halflife, bars = 1:2, ylim = c(0, 850))
+```
+
+---
+## Dynamique transitoire
+
+Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+
+Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
+
+```{r barplot_tr2, fig.width=11, fig.height=6.5}
+layout(matrix(c(1,2), 1), widths = c(1,.4))
+barplot_index(index = as.matrix(sojs), bars = 1:3, 
+              ylab = "Temps de turnover (années)", ylim = c(0,200))
+barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850))
+```
+
+---
+## Conclusions
 
 
-| Climat                  | Perturbations         | Local & voisinage      |
-| ----------------------- |-----------------------| -----------------------|
-| ![:scale 1.2em](images/thermometer.svg) Température à *t1* |![:scale 1.1em](images/fire.svg) Perturbations naturelles | ![:faic](globe) Domaines bioclimatiques |
-| ![:scale 1.1em](images/cloud.svg) Précipitation à *t1* |![:scale 1.2em](images/stump.svg) Coupes  |  ![:scale 1.1em](images/soil.svg) Type de sol   |
-| ![:scale 1.2em](images/cactus.svg) ∆Température/an | ![:scale 1.1em](images/old.svg) Âge du peuplement  |  ![:faic](clock-o) Années depuis *t1* |
-| ![:scale 1.3em](images/flood1.svg) ∆Précipitation/an | &nbsp;  | &nbsp;   |
+> .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
+
+.alert[Oui, mais difficilement sans perturbations.]
+
+> .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+
+.alert[Oui. Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré et Boréal-Mixte.]
+
+> .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre et la dynamique transitoire ?]
+
+.alert[Les perturbations modérées, pas majeures, tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord.]
+
+.alert[Les perturbations modérées, pas majeures, accélèrent la dynamique transitoire.]
 
 
 
 ---
-## Déclencheurs des transitions
+## Conclusions
+
+États alternatifs stables **sans** changements climatiques
+
+<br>
 
 .center[
-![](images/diag_trans_mixed2.png)
-]
-
-
----
-## Influence du changement climatique
-
-.center[![:scale 92%](images/effect_cc0.png)]
-
----
-## Influence du changement climatique
-
-.center[![:scale 92%](images/effect_cc1.png)]
-
----
-## Influence du changement climatique
-
-.center[![:scale 92%](images/effect_cc2.png)]
-
-
----
-## Influence du voisinage 
-
-.center[![:scale 92%](images/effect_region.png)]
-
----
-## Influence du sol
-
-.center[![:scale 92%](images/effect_humus.png)]
-
----
-## Influence de l'âge du peuplement
-
-.center[![:scale 92%](images/effect_age.png)]
-
----
-## Influence des perturbations naturelles
-
-.center[![:scale 92%](images/effect_nat0.png)]
-
----
-## Influence des perturbations naturelles
-
-.center[![:scale 92%](images/effect_nat1.png)]
-
----
-## Influence des perturbations naturelles
-
-.center[![:scale 92%](images/effect_nat2.png)]
-
----
-## Influence de la coupe forestière
-
-.center[![:scale 92%](images/effect_harv0.png)]
-
----
-## Influence de la coupe forestière
-
-.center[![:scale 92%](images/effect_harv1.png)]
-
----
-## Influence de la coupe forestière
-
-.center[![:scale 92%](images/effect_harv2.png)]
-
-
-
----
-## Conclusions
-
-> .image-holder[ ![:scale 1.2em](images/one.svg) Quelles ont été les transitions d’état dans les forêts au cours des dernières décennies?]
-
-.center[ ![:scale 60%](images/diag_trans_pourcen.png) ]
-
----
-## Conclusions
-
-> .image-holder[  ![:scale 1.2em](images/two.svg) Quels facteurs environnementaux déclenchent ces transitions de communautés? ]
-
-
-.pull-left[
-**Contrainte à la migration**
-
-![:scale 1.1em](images/soil.svg) Conditions édaphiques
-
-![:scale 1.3em](images/flood1.svg) Précipitations
-
-![:faic](tree) Compétition par les espèces boréales
-]
-
-
-.pull-right[
-**Favorable à la migration**
-
-![:scale 1.1em](images/old.svg) Vieillissement du peuplement
-
-![:scale 1.2em](images/cactus.svg) Réchauffement
-
-![:scale 1.1em](images/fire.svg) Perturbations naturelles et anthropiques à court terme... mais à long terme?
+![:scale 75%](images/ballncup1.png)
 ]
 
 ---
 ## Conclusions
 
+États alternatifs stables **avec** changements climatiques
 
-> .image-holder[ ![:scale 1.2em](images/three.svg) &nbsp; Est-ce que les perturbations peuvent accélérer certaines transitions?]
-
+<br>
 
 .center[
-![:scale 62%](images/conclu_age_dist.png)
-
-![:scale 70%](images/state_shift_conclu.png)
+![:scale 75%](images/ballncup2.png)
 ]
+
+
+
+
+---
+## Résultats du modèle msm
+
+```{r coef, fig.width=9.5, fig.height=7.6}
+plot_risk(msm_glb)
+```
+
+
