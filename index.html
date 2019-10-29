@@ -37,27 +37,6 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 .footnote[McKenney et al. 2007. BioScience.]
 
----
-## Déplacement des niches
-
-.center[
-![:scale 91.8%](images/niche_move1.png)
-]
-
----
-## Déplacement des niches
-
-.center[
-![:scale 93%](images/niche_move2.png)
-]
-
----
-## Déplacement des niches
-
-.center[
-![:scale 93%](images/niche_move3.png)
-]
-
 
 ---
 ## Contraintes à la migration
@@ -96,7 +75,7 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 &gt; .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
 &gt;
-&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent favoriser certaines transitions? ]
 &gt;
 &gt; .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre potentiel et la dynamique transitoire ? ]
 
@@ -155,20 +134,22 @@ Inventaires forestiers du Québec Méridional
 
 ##### Modèle de Markov multi-états à temps continu
 
-&lt;img src="index_files/figure-html/trans_time-1.png" width="504" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/trans_time-1.png" width="475.2" style="display: block; margin: auto;" /&gt;
 
 - Processus de Markov: 
   - Les transitions dépendent de l'état actuel, pas des états antérieurs
 
 - Temps continu: 
-  - intervalle de temps irrégulier, avec plusieurs transitions possibles durant un intervalle
-  - le moment exact de la transition n'est pas connu
+  - Intervalle de temps irrégulier; 
+  - Plusieurs transitions possibles durant un intervalle;
+  - Le moment exact de la transition n'est pas connu
 
 ---
 ## Modèle
 
 ##### Modèle de Markov multi-états à temps continu
 
+&lt;br&gt;
 Les transitions entre les états peuvent dépendre de l'environnement:
 
 .left-column[
@@ -185,7 +166,7 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 ]
 
 .right-column[
-&gt; ![:faic](thermometer-full) Température à `\(t_{i-1}\)`
+&gt; ![:faic](thermometer-full) Température de la saison de croissance à `\(t_{i-1}\)`
 
 &gt; ![:scale 1.1em](images/cloud.svg) Indice d'humidité climatique (CMI) à `\(t_{i-1}\)` 
 
@@ -204,26 +185,27 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 ---
 ## Modèle
 
+###### Matrice d'intensité Q contenant les risques de transition instantanés (ligne à colonne)
+
 &lt;img src="index_files/figure-html/qmatrix-1.png" width="360" style="display: block; margin: auto;" /&gt;
 
 &lt;br&gt;
-##### Pour les transtions entre tous les états sauf vers Pionnier:
+**Pour les transtions entre tous les états sauf vers Pionnier:**
 
 `$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climat} + \beta_{p} \times \textbf{perturbation} + \beta_{s} \times \textbf{sol})$$`
 
-##### Pour les transitions vers Pionnier:
+**Pour les transitions vers Pionnier:**
 
 `$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{perturbation})$$`
 
 ---
 ## Transitions observées
 
-&lt;img src="index_files/figure-html/trans_diag-1.png" width="684" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/trans_diag-1.png" width="828" style="display: block; margin: auto;" /&gt;
 
----
-## Transitions observées
 
-&lt;img src="index_files/figure-html/trans_flow-1.png" width="864" style="display: block; margin: auto;" /&gt;
+
+
 
 
 
@@ -231,7 +213,7 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 ---
 ## Probabilités de transitions
 
-##### Coupe mineure ou absente
+##### Peu ou pas de coupe
 
 &lt;img src="index_files/figure-html/pmat_disturb0-1.png" width="720" style="display: block; margin: auto;" /&gt;
 
@@ -249,65 +231,6 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 ##### Coupes majeures
 
 &lt;img src="index_files/figure-html/pmat_disturb2-1.png" width="720" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-
-
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes modérées
-&lt;img src="index_files/figure-html/steady_state11-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes modérées 
-&lt;img src="index_files/figure-html/steady_state12-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes modérées
-&lt;img src="index_files/figure-html/steady_state13-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes modérées
-&lt;img src="index_files/figure-html/steady_state14-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
-
----
-## Proportion potentielle à l'équilibre
-
-
-
-##### Différentes fréquences de coupes majeures
-
-&lt;img src="index_files/figure-html/steady_state21-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes majeures
-&lt;img src="index_files/figure-html/steady_state22-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes majeures
-&lt;img src="index_files/figure-html/steady_state23-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
----
-## Proportion potentielle à l'équilibre
-
-##### Différentes fréquences de coupes majeures
-&lt;img src="index_files/figure-html/steady_state24-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
-
 
 ---
 ## Proportion potentielle à l'équilibre
@@ -336,20 +259,42 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 &lt;img src="index_files/figure-html/barplot4-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
 
 ---
+## Déplacement de l'écotone à l'équilibre
+
+
+
+
+##### Peu ou pas de coupe
+&lt;img src="index_files/figure-html/steady_state11-1.png" width="756" style="display: block; margin: auto;" /&gt;
+
+---
+## Déplacement de l'écotone à l'équilibre
+
+##### Coupes modérées
+&lt;img src="index_files/figure-html/steady_state12-1.png" width="756" style="display: block; margin: auto;" /&gt;
+
+---
+## Déplacement de l'écotone à l'équilibre
+
+##### Coupes majeures
+&lt;img src="index_files/figure-html/steady_state13-1.png" width="756" style="display: block; margin: auto;" /&gt;
+
+
+---
 ## Dynamique transitoire
 
 
 
-Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+Temps de séjour ![:faic](arrow-right) turnover; temps passé dans un état avant de faire une transition
 
 Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
---
+
 &lt;img src="index_files/figure-html/barplot_tr0-1.png" width="792" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Dynamique transitoire
 
-Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+Temps de séjour ![:faic](arrow-right) turnover; temps passé dans un état avant de faire une transition
 
 Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
 
@@ -358,7 +303,7 @@ Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équili
 ---
 ## Dynamique transitoire
 
-Temps de turnover ![:faic](arrow-right) temps de séjour dans un état avant de faire une transition
+Temps de séjour ![:faic](arrow-right) turnover; temps passé dans un état avant de faire une transition
 
 Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équilibre
 
@@ -367,12 +312,12 @@ Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équili
 ---
 ## Conclusions
 
-
+&lt;br&gt;
 &gt; .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
 
-.alert[Oui, mais difficilement sans perturbations.]
+.alert[Possiblement, mais difficilement sans perturbations.]
 
-&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent accélérer certaines transitions? ]
+&gt; .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent favoriser certaines transitions? ]
 
 .alert[Oui. Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré et Boréal-Mixte.]
 
@@ -387,23 +332,23 @@ Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équili
 ---
 ## Conclusions
 
-États alternatifs stables **sans** changements climatiques
+États alternatifs stables ***sans*** changements climatiques
 
 &lt;br&gt;
 
 .center[
-![:scale 75%](images/ballncup1.png)
+![:scale 80%](images/ballncup1.png)
 ]
 
 ---
 ## Conclusions
 
-États alternatifs stables **avec** changements climatiques
+États alternatifs stables ***avec*** changements climatiques
 
 &lt;br&gt;
 
 .center[
-![:scale 75%](images/ballncup2.png)
+![:scale 80%](images/ballncup2.png)
 ]
 
 

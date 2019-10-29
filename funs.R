@@ -1,5 +1,5 @@
 ### PLOT P MATRIX ####
-plot_pmat <- function(mod, covariates = NULL) {
+plot_pmat <- function(mod, covariates = 0) {
   
   pmat <- t(pmatrix.msm(mod, t = 10, covariates = covariates, ci = "none"))
   class(pmat) <- "matrix"
@@ -22,7 +22,7 @@ plot_pmat <- function(mod, covariates = NULL) {
   pm$arr$TextX[6] <- pm$arr$TextX[6]-.03
   pm$arr$TextX[7] <- pm$arr$TextX[7]+.03
   
-  text(pm$arr$TextX, pm$arr$TextY, pm$arr$Value, cex = 1.4)
+  text(pm$arr$TextX, pm$arr$TextY, pm$arr$Value, cex = 1.5)
 }
 
 
@@ -167,9 +167,15 @@ curve_intersect <- function(curve1, curve2) {
 }
 
 #### Plot steady state
-
-plot_SS <- function(d) {
-  par(mar = c(4,4.3,.7,5))
+plot_SS <- function(logging=0) {
+  par(mar = c(4,4.3,.7,9.2))
+  
+  col_bb <- "#158282"
+  col_tt <- "#D43650"
+  col_pts <- c("white", "grey", "black")
+  lgd <- c("Peu", 
+           "Modérée", 
+           "Majeure")
   
   # Empty plot
   plot0(ylim = c(0,1), xlim = range(x), xaxs = "i", frame.plot = TRUE, yaxs = "i")
@@ -183,26 +189,63 @@ plot_SS <- function(d) {
   text(10.7, .94, "Boréal", col = col_bb[5], cex = 2, font = 2)
   text(13.8, .94, "Tempéré", col = col_tt[5], cex = 2, font = 2)
   
-  if(d != 0){
-    for(i in 1:d) {
-      ll <- which(df[,2] == d_grad[i])
-      lines(bb[ll] ~ x, col = col_bb[i], lwd = 3.5)
-      lines(tt[ll] ~ x, col = col_tt[i],  lwd = 3.5)
-      
-      # Intersect between boreal and mixed+temperate SS curves
-      int <- curve_intersect(curve1 = cbind.data.frame(x, bb[ll]), 
-                             curve2 = cbind.data.frame(x, tt[ll]))
-      points(int$x, 1, xpd = NA, 
-             pch = 21, col = "black", bg = alpha("black", c_grad[i]), cex = 2.5, lwd = 2)
-      
-    }
-    legend(14.35, .65, legend = paste0(d_grad[1:d]*100, "%"), 
-           pch = 21, col = "black", pt.bg = alpha("black", c_grad[1:d]), 
-           cex = 1.4, pt.cex = 2.3, pt.lwd = 1.7, xpd = NA, bty = "n")
+  
+  for(i in 1:length(logging)) {
+    ll <- which(df[,"logging"] == logging[i])
+    lines(bb[ll] ~ x, col = col_bb, lwd = 3.5, lty = i)
+    lines(tt[ll] ~ x, col = col_tt, lwd = 3.5, lty = i)
+    
+    # Intersect between boreal and mixed+temperate SS curves
+    int <- curve_intersect(curve1 = cbind.data.frame(x, bb[ll]), 
+                           curve2 = cbind.data.frame(x, tt[ll]))
+    points(int$x, 1, xpd = NA, 
+           pch = 21, col = "black", bg = col_pts[i], cex = 2.5, lwd = 2)
+    
   }
   
-  
+  legend(14.35, .65, legend = lgd[1:length(logging)],
+         pch = 21, col = "black", pt.bg = col_pts[1:length(logging)], 
+         lty = 1:length(logging), lwd = 2.5, seg.len = 3.55, x.intersp = .5,
+         cex = 1.4, pt.cex = 2.4, pt.lwd = 2.5, xpd = NA, bty = "n")
 }
+
+
+
+# plot_SS2 <- function(d) {
+#   par(mar = c(4,4.3,.7,5.8))
+#   
+#   # Empty plot
+#   plot0(ylim = c(0,1), xlim = range(x), xaxs = "i", frame.plot = TRUE, yaxs = "i")
+#   polygon(x = c(tp_mixed, rev(tp_mixed)), y = c(0,0,1,1),
+#           col = alpha("grey", .2), border = NA)
+#   axis(1, cex.axis = 1.2)
+#   axis(2, cex.axis = 1.2, las = 1)
+#   mtext("Température de la saison de croissance", 1, line = 3, cex = 1.8, font = 2)
+#   mtext("Proportion d'états à l'équilibre", 2, line = 3, cex = 1.8, font = 2)
+#   
+#   text(10.7, .94, "Boréal", col = col_bb[5], cex = 2, font = 2)
+#   text(13.8, .94, "Tempéré", col = col_tt[5], cex = 2, font = 2)
+#   
+#   if(d != 0){
+#     for(i in 1:d) {
+#       ll <- which(df[,2] == d_grad[i])
+#       lines(bb[ll] ~ x, col = col_bb[i], lwd = 3.5)
+#       lines(tt[ll] ~ x, col = col_tt[i],  lwd = 3.5)
+#       
+#       # Intersect between boreal and mixed+temperate SS curves
+#       int <- curve_intersect(curve1 = cbind.data.frame(x, bb[ll]), 
+#                              curve2 = cbind.data.frame(x, tt[ll]))
+#       points(int$x, 1, xpd = NA, 
+#              pch = 21, col = "black", bg = alpha("black", c_grad[i]), cex = 2.5, lwd = 2)
+#       
+#     }
+#     legend(14.35, .65, legend = paste0(d_grad[1:d]*100, "%"), title = "Fréquence",
+#            pch = 21, col = "black", pt.bg = alpha("black", c_grad[1:d]), 
+#            cex = 1.4, pt.cex = 2.3, pt.lwd = 1.7, xpd = NA, bty = "n")
+#   }
+#   
+#   
+# }
   
 
 ### BARPLOT STEADY STATE & TRANSIENT ####
@@ -210,7 +253,7 @@ plot_SS <- function(d) {
 
 barplot_index <- function(index = NULL, bars = 1:3, ylim = NULL,
                           ylab = NULL,
-                          lgd = c("Coupe mineure", 
+                          lgd = c("Peu ou pas de coupe", 
                                   "Coupe modérée", 
                                   "Coupe majeure"), 
                           colss = c("#f1ba53","#E38451", "#b5305d")) {
@@ -234,7 +277,7 @@ barplot_index <- function(index = NULL, bars = 1:3, ylim = NULL,
 
 barplot_halflife <- function(index = NULL, ylim = NULL, bars = 1:3,
                           ylab = "Temps de convergence (années)",
-                          lgd = c("Coupe mineure", 
+                          lgd = c("Peu ou pas de coupe", 
                                   "Coupe modérée", 
                                   "Coupe majeure"), 
                           colss = c("#f1ba53","#E38451", "#b5305d")) {

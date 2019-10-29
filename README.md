@@ -6,4 +6,4 @@
 
 - [decktape](https://github.com/astefanutti/decktape) is used to export slides in pdf
 
-  `decktape --no-sandbox file:///Users/mariehbrice/Documents/GitHub/talk_transition/index.html#1 talk.pdf`
+  `decktape --no-sandbox file:///Users/mariehbrice/Documents/GitHub/talk_transition/index.html talk.pdf --chrome-arg=--disable-web-security`
