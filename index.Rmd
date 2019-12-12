@@ -41,7 +41,7 @@ source("funs.R")
 msm_glb <- readRDS("data/msm_glb.RDS")
 states_ba <- readRDS("data/states_envba.RDS") %>% arrange(plot_id, year_measured)
 
-env_sc <- scale(states_ba[,c("sTP", "CMI", "DRAIN", "PH_HUMUS")])
+env_sc <- scale(states_ba[,c("sTP", "sCMI", "DRAIN", "PH_HUMUS")])
 
 states <- c("Boréal", "Mixte", "Pionnier", "Tempéré")
 
@@ -457,7 +457,7 @@ barplot_index(index = SS, bars = 1:4, lgd = lgd, colss = colss, ylim = c(0,1),
 tp_grad <- seq(-1.9, 1.6, len = 50)
 
 df <- expand.grid(sTP = tp_grad, logging = c(0,1, 2), 
-                  CMI = mixed_mean[[2]],
+                  sCMI = mixed_mean[[2]],
                   DRAIN = mixed_mean[[3]],
                   PH_HUMUS = mixed_mean[[4]])
 

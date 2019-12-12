@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin" />
+    <link href="assets/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/academicons-1.8.1/css/academicons.min.css">
+    <link rel="stylesheet" href="mytemplate.css" type="text/css" />
+    <link rel="stylesheet" href="mytemplate-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone
+### Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin
+
+---
+
+
+
+
+
+
+
+
+
+## Déplacement des niches
+
+Future climate envelope for Sugar Maple (2071-2100)
+
+.center[
+![:scale 60%](images/mckenney_maple.gif)
+]
+
+.footnote[McKenney et al. 2007. BioScience.]
+
+
+---
+## Constraints to migration
+
+- Slow demographics
+- Limited dispersion
+- Interspecific competition
+- Soil heterogeneity
+
+.center[![:scale 87%](images/niche_vs_tree.png)]
+
+---
+## Alternative stable states
+
+&lt;br&gt;
+
+.center[![:scale 100%](images/alternative_state_eng.png)]
+
+.footnote[Johnstone et al. 2016]
+
+
+---
+## ![:scale 1.1em](images/target.svg)bjectifs
+
+
+**Understand the constraints and drivers underlying the transition dynamics of Quebec's forests.**
+
+
+&gt; .image-holder[ ![:scale 1.2em](images/one.svg) What are the trends in recent forest transition dynamics? ]
+&gt;
+&gt; .image-holder[ ![:scale 1.2em](images/two.svg) How do disturbances influence the transition probabilities among forest states? ]
+&gt;
+&gt; .image-holder[ ![:scale 1.2em](images/three.svg) What is the impact of different disturbance intensities on the potential equilibrium and transient dynamics? ]
+
+
+&lt;br&gt;
+
+.center[.image-holder[
+![:scale 230px](images/mixed.jpg)
+![:scale 40px](images/right-arrow.svg)
+![:scale 230px](images/pioneer.jpg)
+![:scale 40px](images/right-arrow.svg)
+![:scale 230px](images/temperate.jpg)
+]]
+
+
+
+---
+## Data
+
+Québec Forest inventories 	
+  - 12000+ permanent plots sampled during 5 large inventories between 1970 and 2018 (by the MFFP)
+  - Selection of 11058 plots surveyed at least twice each
+
+
+.center[
+![:scale 80%](images/fig1_region.png)
+]
+
+
+
+---
+## Data
+
+.center[
+![:scale 85%](images/diag_trans_pics.png)
+]
+
+
+---
+## Multi-state continuous-time Markov model
+
+&lt;img src="index_qcbs19_files/figure-html/trans_time-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+.left-column[
+&lt;br&gt;
+**Climate**
+
+&lt;br&gt;&lt;br&gt;
+
+**Disturbances**
+
+&lt;br&gt;&lt;br&gt;
+
+**Soil**
+]
+
+.right-column[
+&gt; ![:faic](thermometer-full) Growing season temperature at `\(t_{i-1}\)`
+
+&gt; ![:scale 1.1em](images/cloud.svg) Climate Moisture Index (CMI) at `\(t_{i-1}\)` 
+
+&lt;br&gt;
+&gt; ![:scale 1.1em](images/fire.svg) Natural disturbances between `\(t_{i-1}\)` and `\(t_{i}\)`
+
+&gt; ![:scale 1.2em](images/stump.svg) Logging between `\(t_{i-1}\)` and `\(t_{i}\)`
+
+&lt;br&gt;
+&gt; ![:scale 1.1em](images/soil.svg) Soil pH
+
+&gt; ![:faic](tint) Soil drainage
+
+]
+
+---
+## Model
+
+###### Intensity matrice Q containing instantaneous transition risks (row to columns)
+
+&lt;img src="index_qcbs19_files/figure-html/qmatrix-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+**All transtions among all states except to Pioneer:**
+
+`$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climate} + \beta_{p} \times \textbf{disturbance} + \beta_{s} \times \textbf{soil})$$`
+
+**Transitions to Pioneer:**
+
+`$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{disturbance})$$`
+
+---
+## Observed transitions
+
+&lt;img src="index_qcbs19_files/figure-html/trans_diag-1.png" width="828" style="display: block; margin: auto;" /&gt;
+
+
+
+
+
+
+
+
+---
+## Transition probabilities
+
+##### No or minor logging
+
+&lt;img src="index_qcbs19_files/figure-html/pmat_disturb0-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Transition probabilities
+
+##### Moderate logging
+
+&lt;img src="index_qcbs19_files/figure-html/pmat_disturb1-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+---
+## Transition probabilities
+
+##### Major logging
+
+&lt;img src="index_qcbs19_files/figure-html/pmat_disturb2-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+---
+## Potential equilibrium proportion
+
+&lt;br&gt;
+
+
+&lt;img src="index_qcbs19_files/figure-html/barplot1-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Potential equilibrium proportion
+
+&lt;br&gt;
+&lt;img src="index_qcbs19_files/figure-html/barplot2-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Potential equilibrium proportion
+
+&lt;br&gt;
+&lt;img src="index_qcbs19_files/figure-html/barplot3-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Potential equilibrium proportion
+
+&lt;br&gt;
+&lt;img src="index_qcbs19_files/figure-html/barplot4-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Ecotone shift at equilibrium
+
+
+
+
+##### No or minor logging
+&lt;img src="index_qcbs19_files/figure-html/steady_state11-1.png" width="770.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Ecotone shift at equilibrium
+
+##### Moderate logging
+&lt;img src="index_qcbs19_files/figure-html/steady_state12-1.png" width="770.4" style="display: block; margin: auto;" /&gt;
+
+---
+## Ecotone shift at equilibrium
+
+##### Major logging
+&lt;img src="index_qcbs19_files/figure-html/steady_state13-1.png" width="770.4" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Transient dynamics
+
+
+
+Sojourn time ![:faic](arrow-right) turnover; time spent in a state before making a transition
+
+Convergence time ![:faic](arrow-right) time to reach 90% of the equilibrium
+
+&lt;img src="index_qcbs19_files/figure-html/barplot_tr0-1.png" width="792" style="display: block; margin: auto;" /&gt;
+
+---
+## Transient dynamics
+
+Sojourn time ![:faic](arrow-right) turnover; time spent in a state before making a transition
+
+Convergence time ![:faic](arrow-right) time to reach 90% of the equilibrium
+
+&lt;img src="index_qcbs19_files/figure-html/barplot_tr1-1.png" width="792" style="display: block; margin: auto;" /&gt;
+
+---
+## Transient dynamics
+
+Sojourn time ![:faic](arrow-right) turnover; time spent in a state before making a transition
+
+Convergence time ![:faic](arrow-right) time to reach 90% of the equilibrium
+
+
+&lt;img src="index_qcbs19_files/figure-html/barplot_tr2-1.png" width="792" style="display: block; margin: auto;" /&gt;
+
+---
+## Conclusions
+
+&lt;br&gt;
+&gt; .image-holder[ ![:scale 1.2em](images/one.svg) What are the trends in recent forest transition dynamics? ]
+
+.alert[Possibly, but hardly with no disturbances.]
+
+&gt; .image-holder[ ![:scale 1.2em](images/two.svg) How do disturbances influence the transition probabilities among forest states? ]
+
+.alert[Yes. Moderate disturbances, not major, favour Mixed-Temperate and Boreal-Mixed transitions.]
+
+&gt; .image-holder[ ![:scale 1.2em](images/three.svg) What is the impact of different disturbance intensities on the potential equilibrium and transient dynamics?]
+
+.alert[Moderate disturbances, not major, tend to increase the proportion of Temperate at equilibrium, moving the ecotone northward.]
+
+.alert[Moderate disturbances, not major, accelerate transient dynamics.]
+
+
+---
+## Conclusions
+
+États alternatifs stables ***sans*** changements climatiques
+
+&lt;br&gt;
+
+.center[
+![:scale 80%](images/ballncup1.png)
+]
+
+---
+## Conclusions
+
+États alternatifs stables ***avec*** changements climatiques
+
+&lt;br&gt;
+
+.center[
+![:scale 80%](images/ballncup2.png)
+]
+
+
+
+
+---
+## Résultats du modèle msm
+
+&lt;img src="index_qcbs19_files/figure-html/coef-1.png" width="684" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="mytemplate-macros.js"></script>
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

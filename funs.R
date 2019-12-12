@@ -167,15 +167,31 @@ curve_intersect <- function(curve1, curve2) {
 }
 
 #### Plot steady state
-plot_SS <- function(logging=0) {
-  par(mar = c(4,4.3,.7,9.2))
+plot_SS <- function(logging=0, lang = "fr") {
+  par(mar = c(4.1,4.3,.7,9.7))
   
   col_bb <- "#158282"
   col_tt <- "#D43650"
   col_pts <- c("white", "grey", "black")
-  lgd <- c("Peu", 
-           "Modérée", 
-           "Majeure")
+  
+  if(lang == "fr") {
+    lgd <- c("Peu", 
+             "Modérée", 
+             "Majeure")
+    xlab <- "Température de la saison de croissance"
+    ylab <- "Proportion d'états à l'équilibre"
+    stB <- "Boréal"
+    stT <- "Tempéré"
+  } else {
+    lgd <- c("Minor", 
+             "Moderate", 
+             "Major")
+    xlab <- "Growing season temperature"
+    ylab <- "Steady state proportion"
+    stB <- "Boreal"
+    stT <- "Temperate"
+  }
+ 
   
   # Empty plot
   plot0(ylim = c(0,1), xlim = range(x), xaxs = "i", frame.plot = TRUE, yaxs = "i")
@@ -183,11 +199,11 @@ plot_SS <- function(logging=0) {
           col = alpha("grey", .2), border = NA)
   axis(1, cex.axis = 1.2)
   axis(2, cex.axis = 1.2, las = 1)
-  mtext("Température de la saison de croissance", 1, line = 3, cex = 1.8, font = 2)
-  mtext("Proportion d'états à l'équilibre", 2, line = 3, cex = 1.8, font = 2)
+  mtext(xlab, 1, line = 3, cex = 1.8, font = 2)
+  mtext(ylab, 2, line = 3, cex = 1.8, font = 2)
   
-  text(10.7, .94, "Boréal", col = col_bb[5], cex = 2, font = 2)
-  text(13.8, .94, "Tempéré", col = col_tt[5], cex = 2, font = 2)
+  text(10.7, .94, stB, col = col_bb[5], cex = 2, font = 2)
+  text(13.8, .94, stT, col = col_tt[5], cex = 2, font = 2)
   
   
   for(i in 1:length(logging)) {
@@ -205,60 +221,35 @@ plot_SS <- function(logging=0) {
   
   legend(14.35, .65, legend = lgd[1:length(logging)],
          pch = 21, col = "black", pt.bg = col_pts[1:length(logging)], 
-         lty = 1:length(logging), lwd = 2.5, seg.len = 3.55, x.intersp = .5,
+         lty = 1:length(logging), lwd = 2.5, seg.len = 3.53, x.intersp = .5,
          cex = 1.4, pt.cex = 2.4, pt.lwd = 2.5, xpd = NA, bty = "n")
 }
 
 
-
-# plot_SS2 <- function(d) {
-#   par(mar = c(4,4.3,.7,5.8))
-#   
-#   # Empty plot
-#   plot0(ylim = c(0,1), xlim = range(x), xaxs = "i", frame.plot = TRUE, yaxs = "i")
-#   polygon(x = c(tp_mixed, rev(tp_mixed)), y = c(0,0,1,1),
-#           col = alpha("grey", .2), border = NA)
-#   axis(1, cex.axis = 1.2)
-#   axis(2, cex.axis = 1.2, las = 1)
-#   mtext("Température de la saison de croissance", 1, line = 3, cex = 1.8, font = 2)
-#   mtext("Proportion d'états à l'équilibre", 2, line = 3, cex = 1.8, font = 2)
-#   
-#   text(10.7, .94, "Boréal", col = col_bb[5], cex = 2, font = 2)
-#   text(13.8, .94, "Tempéré", col = col_tt[5], cex = 2, font = 2)
-#   
-#   if(d != 0){
-#     for(i in 1:d) {
-#       ll <- which(df[,2] == d_grad[i])
-#       lines(bb[ll] ~ x, col = col_bb[i], lwd = 3.5)
-#       lines(tt[ll] ~ x, col = col_tt[i],  lwd = 3.5)
-#       
-#       # Intersect between boreal and mixed+temperate SS curves
-#       int <- curve_intersect(curve1 = cbind.data.frame(x, bb[ll]), 
-#                              curve2 = cbind.data.frame(x, tt[ll]))
-#       points(int$x, 1, xpd = NA, 
-#              pch = 21, col = "black", bg = alpha("black", c_grad[i]), cex = 2.5, lwd = 2)
-#       
-#     }
-#     legend(14.35, .65, legend = paste0(d_grad[1:d]*100, "%"), title = "Fréquence",
-#            pch = 21, col = "black", pt.bg = alpha("black", c_grad[1:d]), 
-#            cex = 1.4, pt.cex = 2.3, pt.lwd = 1.7, xpd = NA, bty = "n")
-#   }
-#   
-#   
-# }
   
 
 ### BARPLOT STEADY STATE & TRANSIENT ####
 
 
 barplot_index <- function(index = NULL, bars = 1:3, ylim = NULL,
-                          ylab = NULL,
-                          lgd = c("Peu ou pas de coupe", 
-                                  "Coupe modérée", 
-                                  "Coupe majeure"), 
-                          colss = c("#f1ba53","#E38451", "#b5305d")) {
+                          ylab = NULL, lgd = NULL,
+                          colss = c("#f1ba53","#E38451", "#b5305d"),
+                          lang = "fr") {
   par(mar = c(4,4.3,.7,.5))
 
+  if(is.null(lgd)) {
+    if(lang == "fr") {
+      lgd <- c("Peu ou pas de coupe", 
+               "Coupe modérée", 
+               "Coupe majeure")
+    } else {
+      lgd <- c("Minor logging", 
+               "Moderate logging", 
+               "Major logging")
+    }
+  }
+
+  
   if(is.null(ylim)) ylim <- range(index)
   
   bp <- barplot(as.matrix(index), beside = T, plot = F)
@@ -276,12 +267,21 @@ barplot_index <- function(index = NULL, bars = 1:3, ylim = NULL,
 }
 
 barplot_halflife <- function(index = NULL, ylim = NULL, bars = 1:3,
-                          ylab = "Temps de convergence (années)",
-                          lgd = c("Peu ou pas de coupe", 
-                                  "Coupe modérée", 
-                                  "Coupe majeure"), 
-                          colss = c("#f1ba53","#E38451", "#b5305d")) {
+                          colss = c("#f1ba53","#E38451", "#b5305d"),
+                          lang = "fr") {
   par(mar = c(4,5,.7,.5))
+  
+  if(lang == "fr") {
+    lgd <- c("Peu ou pas de coupe", 
+             "Coupe modérée", 
+             "Coupe majeure")
+    ylab = "Temps de convergence (années)"
+  } else {
+    lgd <- c("Minor logging", 
+             "Moderate logging", 
+             "Major logging")
+    ylab = "Convergence time (years)"
+  }
   
   if(is.null(ylim)) ylim <- range(index)
   
