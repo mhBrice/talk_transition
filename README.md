@@ -1,6 +1,7 @@
 # Présentation :
 
-## Les perturbations modérées catalysent les transitions forestières dans l’écotone boréal-tempéré | Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone
+## [Les perturbations modérées catalysent les transitions forestières dans l’écotone boréal-tempéré](https://mhbrice.github.io/talk_transition/index.html#1)  
+## [Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone](https://mhbrice.github.io/talk_transition/index_qcbs19.html#1)
 
 Ce répertoire contient les diapos pour:
 
