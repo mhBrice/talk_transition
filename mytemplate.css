@@ -66,9 +66,9 @@
 
 /* Code */
 a, a > code {
-  color: #3fb3b2;
-  font-weight: bold;
-  text-decoration: none;
+  color: #9AB384;
+  font-weight: normal;
+  text-decoration: underline;
 }
 
 
@@ -230,24 +230,42 @@ tr:nth-child(even){background-color: transparent;}
 .title-slide h1 {
   text-align: justify;
   text-shadow: none;
-  font-size: 1.5em;
+  font-size: 1.6em;
+  font-weight: bold;
   color: #404940;
   position: absolute;
-  bottom: 155px;
-  left: 0;
+  bottom: 180px;
+  right: 35px;
+  left: 10px;
   border-bottom: none;
+}
+
+.title-slide h2 {
+  text-align: justify;
+  text-shadow: none;
+  font-size: 1.2em;
+  font-weight: normal;
+  color: #404940;
+  position: absolute;
+  bottom: 110px;
+  left: 20px;
 }
 
 .title-slide h3 {
   text-align: justify;
   text-shadow: none;
-  font-size: 1.1em;
+  font-weight: normal;
+  font-size: 1em;
   color: #404940;
   position: absolute;
-  bottom: 100px;
-  left: 0;
+  bottom:50px;
+  left: 20px;
 }
 
+
+.title-slide .remark-slide-number {
+  display: none;
+}
 
 
 /* help style */

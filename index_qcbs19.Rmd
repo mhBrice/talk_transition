@@ -1,6 +1,8 @@
 ---
 title: "Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone"
-author: "Marie-Hélène Brice, Pierre Legendre & Marie-Josée Fortin"
+subtitle: "Marie-Hélène Brice"
+author: Pierre Legendre, Marie-Josée Fortin <br/> [github.com/mhBrice/talk_transition](https://github.com/mhBrice/talk_transition)
+
 
 output:
   xaringan::moon_reader:
@@ -46,7 +48,7 @@ states_ba <- readRDS("data/states_envba.RDS") %>%
 
 env_sc <- scale(states_ba[,c("sTP", "sCMI", "DRAIN", "PH_HUMUS")])
 
-states <- c("Boreal", "Mixed", "Pionieer", "Temperate")
+states <- c("Boreal", "Mixed", "Pioneer", "Temperate")
 
 st_col <- c("#158282", "#A1BD93", "#FEAC19", "#D43650")
 
@@ -59,7 +61,8 @@ covar_log <- list(mixed_mean,
 ```
 
 
-## Déplacement des niches
+
+## Shift in species distribution
 
 Future climate envelope for Sugar Maple (2071-2100)
 
@@ -73,10 +76,10 @@ Future climate envelope for Sugar Maple (2071-2100)
 ---
 ## Constraints to migration
 
-- Slow demographics
-- Limited dispersion
-- Interspecific competition
+- Slow demographic rates
+- Limited dispersal ability
 - Soil heterogeneity
+- Interspecific competition
 
 .center[![:scale 87%](images/niche_vs_tree.png)]
 
@@ -117,9 +120,9 @@ Future climate envelope for Sugar Maple (2071-2100)
 
 
 ---
-## Data
+## Forest inventory data
 
-Québec Forest inventories 	
+Québec forest inventories 	
   - 12000+ permanent plots sampled during 5 large inventories between 1970 and 2018 (by the MFFP)
   - Selection of 11058 plots surveyed at least twice each
 
@@ -131,15 +134,14 @@ Québec Forest inventories
 
 
 ---
-## Data
+## Forest inventory data
 
 .center[
-![:scale 85%](images/diag_trans_pics.png)
+![:scale 90%](images/diag_trans_pics.png)
 ]
 
-
 ---
-## Multi-state continuous-time Markov model
+## Multi-state Markov model in continuous-time
 
 ```{r trans_time, fig.width=6, fig.height=2.4}
 pos <- coordinates(pos = 4)
@@ -167,40 +169,11 @@ straightarrow(from = pos[1, ] - c(0, .22), to = pos[4, ] - c(0, .22),
 textplain(pos[4, ] - c(0, .35), lab = "Time", cex = 1.7)
 ```
 
-.left-column[
-<br>
-**Climate**
+.center[
+.large[![:faic](arrow-down)]
 
-<br><br>
-
-**Disturbances**
-
-<br><br>
-
-**Soil**
+We model the intensity matrice Q containing instantaneous transition risks among states (row to columns) in relation to environmental variables.
 ]
-
-.right-column[
-> ![:faic](thermometer-full) Growing season temperature at $t_{i-1}$
-
-> ![:scale 1.1em](images/cloud.svg) Climate Moisture Index (CMI) at $t_{i-1}$ 
-
-<br>
-> ![:scale 1.1em](images/fire.svg) Natural disturbances between $t_{i-1}$ and $t_{i}$
-
-> ![:scale 1.2em](images/stump.svg) Logging between $t_{i-1}$ and $t_{i}$
-
-<br>
-> ![:scale 1.1em](images/soil.svg) Soil pH
-
-> ![:faic](tint) Soil drainage
-
-]
-
----
-## Model
-
-###### Intensity matrice Q containing instantaneous transition risks (row to columns)
 
 ```{r qmatrix, fig.height=3, fig.width=5}
 qmat <- c("$-\\sum_{s \\neq B} q_{Bs}$","q_{BM}", "q_{BP}", 0,
@@ -216,14 +189,61 @@ lines(c(9,9), c(1.5,8.5))
 text(rep(c(2,4,6,8),4),rep(c(8,6,4,2),ea=4), TeX(qmat), cex = 1.5, col = '#404940')
 ```
 
+---
+## Multi-state Markov model in continuous-time
+
+```{r trans_time2, fig.width=6, fig.height=2.4}
+
+par(mar=c(0,0,0,0))
+openplotmat(main = "")
+for (i in 1:4) {
+  textellipse(mid=pos[i,], radx = 0.105, lab = labs[i], cex = 1.7,
+              col = '#404940', shadow.col='#98B283', shadow.size = 0.005)
+  }
+for (i in 1:3) {
+  curvedarrow(from = pos[i, ] + c(.01, .12), to = pos[i+1, ] + c(-.01, .12),
+              curve = curv[i], arr.type = "triangle", arr.length=.4, arr.width=.5,
+              arr.pos = .5, lwd = 4, lcol ="grey40", arr.col ="grey40")}
+
+straightarrow(from = pos[1, ] - c(0, .22), to = pos[4, ] - c(0, .22),
+              arr.type = "triangle", arr.pos = 1, lwd = 15, lcol ="grey60", arr.col ="grey60",
+              arr.length=.7, arr.width=.7)
+textplain(pos[4, ] - c(0, .35), lab = "Time", cex = 1.7)
+```
+
+.left-column[
 <br>
-**All transtions among all states except to Pioneer:**
+**Climate**
 
-$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climate} + \beta_{p} \times \textbf{disturbance} + \beta_{s} \times \textbf{soil})$$
+<br><br>
 
-**Transitions to Pioneer:**
+**Soil**
 
-$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{disturbance})$$
+<br><br>
+
+**Disturbances**
+
+
+]
+
+.right-column[
+> ![:faic](thermometer-full) Growing season temperature at $t_{i-1}$
+
+> ![:scale 1.1em](images/cloud.svg) Climate Moisture Index (CMI) at $t_{i-1}$ 
+
+
+<br>
+> ![:scale 1.1em](images/soil.svg) Soil pH
+
+> ![:faic](tint) Soil drainage
+
+<br>
+> ![:scale 1.1em](images/fire.svg) Natural disturbances between $t_{i-1}$ and $t_{i}$
+
+> ![:scale 1.2em](images/stump.svg) Logging between $t_{i-1}$ and $t_{i}$
+
+]
+
 
 ---
 ## Observed transitions
@@ -232,28 +252,6 @@ $$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{disturbance})$$
 trans_nb <- statetable.msm(states_num, plot_id, data = states_ba)
 rownames(trans_nb) <- colnames(trans_nb) <- states
 trans_perc <- t(round(trans_nb/rowSums(trans_nb)*100, 1))
-
-# pos.box <- cbind (c(0.5, 0.15, 0.85, 0.5),
-#                   c(0.85, 0.5, 0.5, 0.15))
-# 
-# par(mar=c(0.5,0.5,0.5,0.5))
-# 
-# pm <- plotmat(trans_perc, pos = pos.box, curve = 0.07, name = states,
-#               lwd = 2, relsize = .9, box.cex = 1.8,
-#               cex.txt = 0, txt.col = "white", dtext = .45, txt.font = 2,
-#               box.lwd = 0.1, box.type = "rect", shadow.size = 0.005,
-#               box.prop = 0.4, box.size = 0.105, box.col = st_col,
-#               arr.length=.15, arr.width=.2,  arr.type ="triangle",
-#               arr.col ="grey40", arr.lcol = "grey40",
-#               self.cex = 0.65, self.lwd = 2,
-#               self.shifty = c(.07,0,0,-.07), self.shiftx = c(0,-.14,.14,0),
-#               self.arrpos = c(-1,0,3,.5))
-# 
-# pm$arr$TextX[5] <- pm$arr$TextX[5]-.01
-# pm$arr$TextX[10] <- pm$arr$TextX[10]+.01
-# pm$arr$TextX[6] <- pm$arr$TextX[6]-.015
-# pm$arr$TextX[11] <- pm$arr$TextX[11]+.02
-# text(pm$arr$TextX, pm$arr$TextY, paste0(pm$arr$Value, "%"), cex = 1.4, font = 2)
 
 arr_l <- trans_perc/40
 diag(arr_l) <- 0
@@ -283,48 +281,6 @@ pm$arr$TextX[8] <- pm$arr$TextX[8]-.03
 pm$arr$TextX[9] <- pm$arr$TextX[9]+.03
 pm$arr$TextX[11] <- pm$arr$TextX[11]+.06
 text(pm$arr$TextX, pm$arr$TextY, pm$arr$Value, cex = 1.6, col = col_txt)
-```
-
-
-
-```{r trans_flow, fig.width=12, fig.height=7.5, eval = FALSE}
-pos <- coordinates(pos = 4, my = -.4)
-pos1 <- c(.5,.85)
-curv1 <- c(.4,.48,.52,.6)
-curv2 <- c(.2,.4,.6,.8)
-
-par(mfrow = c(2,2))
-for(st in 1:4) {
-  par(mar=c(0,0,0,0.7))
-  openplotmat(main = "")
-  for(i in 1:4) {
-    xspline(x = c(pos1[1], curv1[i], curv2[i], pos[i,1]),
-            y = c(pos1[2]-.02, 0.5, 0.3, pos[i,2]),
-            s = 1, lwd = trans_perc[i,st]/2.5, border = "grey40")
-  }
-
-
-  textrect(mid=pos1, radx = 0.11, rady = 0.07,
-           lab = states[st], cex = 1.6, font = 2,
-           col = "white", box.col = st_col[st], lcol = st_col[st],
-           shadow.size = 0.005)
-  textplain(mid = pos1 + c(0,.1), lab = paste0("n = ", colSums(trans_nb)[st]),
-            cex = 1.3, font = 2)
-
-  for (i in 1:4) {
-    textrect(mid=pos[i,], radx = 0.11, rady = 0.07, lab = states[i],
-             cex = 1.6, font = 2,
-             col = "white", box.col = st_col[i], lcol = st_col[i],
-             shadow.size = 0.005)
-
-    if(i %in% 1:2) l = -.06
-    if(i %in% 3:4) l = .06
-    textplain(mid = pos[i,]+c(l,.1), lab = paste0(trans_perc[i,st], "%"),
-              cex=1.3, font=2, col = "grey25")
-  }
-
-}
-
 ```
 
 
@@ -363,14 +319,16 @@ plot_pmat(mod = msm_glb, covariates = covar_log[[3]])
 
 <br>
 ```{r prep_barplot, fig.width=8, fig.height=5}
-init <- states_ba %>% 
+init <- states_ba %>% filter(ecoreg3 == "Mixed") %>%
   group_by(ID_PE) %>% 
   arrange(year_measured) %>% 
-  slice(1) %>% filter(year_measured<1980)
+  slice(1) #%>% filter(year_measured<1980)
 init <- table(init$states_ba)
 init <- init/sum(init)
 
-dl <- list(list(logging1 = 0), list(logging1 = 1), list(logging2 = 1))
+dl <- list(list(mixed_mean, logging1 = 0), 
+           list(mixed_mean, logging1 = 1), 
+           list(mixed_mean, logging2 = 1))
 qmats <- lapply(dl, function(x)
   qmatrix.msm(msm_glb, covariates = x, ci = "none"))
 
@@ -543,48 +501,41 @@ barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850), lang = "en")
 ## Conclusions
 
 <br>
-> .image-holder[ ![:scale 1.2em](images/one.svg) What are the trends in recent forest transition dynamics? ]
+.image-holder[ ![:scale 1.2em](images/one.svg) What are the trends in recent forest transition dynamics? ]
 
-.alert[Possibly, but hardly with no disturbances.]
+> .alert[Strong regeneration of boreal forests in response to disturbances in the 70s.]
 
-> .image-holder[ ![:scale 1.2em](images/two.svg) How do disturbances influence the transition probabilities among forest states? ]
+> .alert[Conversion from mixed to temperate stands in response to climate change.]
 
-.alert[Yes. Moderate disturbances, not major, favour Mixed-Temperate and Boreal-Mixed transitions.]
+<br>
+.image-holder[ ![:scale 1.2em](images/two.svg) How do disturbances influence the transition probabilities among forest states? ]
 
-> .image-holder[ ![:scale 1.2em](images/three.svg) What is the impact of different disturbance intensities on the potential equilibrium and transient dynamics?]
+> .alert[Yes. Moderate disturbances, not major, favour Mixed-Temperate transitions.]
 
-.alert[Moderate disturbances, not major, tend to increase the proportion of Temperate at equilibrium, moving the ecotone northward.]
+<br>
+.image-holder[ ![:scale 1.2em](images/three.svg) What is the impact of different disturbance intensities on the potential equilibrium and transient dynamics?]
 
-.alert[Moderate disturbances, not major, accelerate transient dynamics.]
+> .alert[Moderate disturbances, not major, tend to increase the proportion of Temperate at equilibrium, moving the ecotone northward.]
+
+> .alert[Moderate disturbances, not major, accelerate transient dynamics.]
 
 
 ---
-## Conclusions
+## Ecological and management implications
 
-États alternatifs stables ***sans*** changements climatiques
-
-<br>
-
-.center[
-![:scale 80%](images/ballncup1.png)
-]
-
----
-## Conclusions
-
-États alternatifs stables ***avec*** changements climatiques
-
-<br>
+> So... 
+> <br>
+> Should we cut down trees to accelerate forest transitions?
 
 .center[
-![:scale 80%](images/ballncup2.png)
+![:scale 80%](images/aerial_view_log.png)
 ]
 
 
 
 
 ---
-## Résultats du modèle msm
+## Multi-state model results
 
 ```{r coef, fig.width=9.5, fig.height=7.6}
 plot_risk(msm_glb)

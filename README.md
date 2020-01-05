@@ -18,3 +18,5 @@ Détails de la présentation:
 - [decktape](https://github.com/astefanutti/decktape) is used to export slides in pdf
 
   `decktape --no-sandbox file:///Users/mariehbrice/Documents/GitHub/talk_transition/index.html talk.pdf --chrome-arg=--disable-web-security`
+  
+  `decktape --no-sandbox file:///Users/mariehbrice/Documents/GitHub/talk_transition/index_qcbs19.html talk_qcbs19.pdf --chrome-arg=--disable-web-security`

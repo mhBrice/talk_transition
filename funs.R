@@ -168,7 +168,7 @@ curve_intersect <- function(curve1, curve2) {
 
 #### Plot steady state
 plot_SS <- function(logging=0, lang = "fr") {
-  par(mar = c(4.1,4.3,.7,9.7))
+  par(mar = c(4.2,4.3,.7,9.7))
   
   col_bb <- "#158282"
   col_tt <- "#D43650"
@@ -202,8 +202,8 @@ plot_SS <- function(logging=0, lang = "fr") {
   mtext(xlab, 1, line = 3, cex = 1.8, font = 2)
   mtext(ylab, 2, line = 3, cex = 1.8, font = 2)
   
-  text(10.7, .94, stB, col = col_bb[5], cex = 2, font = 2)
-  text(13.8, .94, stT, col = col_tt[5], cex = 2, font = 2)
+  text(10.7, .94, stB, col = col_bb, cex = 2, font = 2)
+  text(13.8, .94, stT, col = col_tt, cex = 2, font = 2)
   
   
   for(i in 1:length(logging)) {

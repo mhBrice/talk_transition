@@ -3,7 +3,7 @@
   <head>
     <title>Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin" />
+    <meta name="author" content="Pierre Legendre, Marie-Josée Fortin   github.com/mhBrice/talk_transition" />
     <link href="assets/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/academicons-1.8.1/css/academicons.min.css">
@@ -15,7 +15,8 @@
 class: center, middle, inverse, title-slide
 
 # Moderate disturbances catalyse forest transitions in the temperate-boreal ecotone
-### Marie-Hélène Brice, Pierre Legendre &amp; Marie-Josée Fortin
+## Marie-Hélène Brice
+### Pierre Legendre, Marie-Josée Fortin <br/> <a href="https://github.com/mhBrice/talk_transition">github.com/mhBrice/talk_transition</a>
 
 ---
 
@@ -27,7 +28,8 @@ class: center, middle, inverse, title-slide
 
 
 
-## Déplacement des niches
+
+## Shift in species distribution
 
 Future climate envelope for Sugar Maple (2071-2100)
 
@@ -41,10 +43,10 @@ Future climate envelope for Sugar Maple (2071-2100)
 ---
 ## Constraints to migration
 
-- Slow demographics
-- Limited dispersion
-- Interspecific competition
+- Slow demographic rates
+- Limited dispersal ability
 - Soil heterogeneity
+- Interspecific competition
 
 .center[![:scale 87%](images/niche_vs_tree.png)]
 
@@ -85,9 +87,9 @@ Future climate envelope for Sugar Maple (2071-2100)
 
 
 ---
-## Data
+## Forest inventory data
 
-Québec Forest inventories 	
+Québec forest inventories 	
   - 12000+ permanent plots sampled during 5 large inventories between 1970 and 2018 (by the MFFP)
   - Selection of 11058 plots surveyed at least twice each
 
@@ -99,17 +101,29 @@ Québec Forest inventories
 
 
 ---
-## Data
+## Forest inventory data
 
 .center[
-![:scale 85%](images/diag_trans_pics.png)
+![:scale 90%](images/diag_trans_pics.png)
 ]
 
-
 ---
-## Multi-state continuous-time Markov model
+## Multi-state Markov model in continuous-time
 
 &lt;img src="index_qcbs19_files/figure-html/trans_time-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+.center[
+.large[![:faic](arrow-down)]
+
+We model the intensity matrice Q containing instantaneous transition risks among states (row to columns) in relation to environmental variables.
+]
+
+&lt;img src="index_qcbs19_files/figure-html/qmatrix-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+---
+## Multi-state Markov model in continuous-time
+
+&lt;img src="index_qcbs19_files/figure-html/trans_time2-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 .left-column[
 &lt;br&gt;
@@ -117,11 +131,13 @@ Québec Forest inventories
 
 &lt;br&gt;&lt;br&gt;
 
-**Disturbances**
+**Soil**
 
 &lt;br&gt;&lt;br&gt;
 
-**Soil**
+**Disturbances**
+
+
 ]
 
 .right-column[
@@ -129,42 +145,24 @@ Québec Forest inventories
 
 &gt; ![:scale 1.1em](images/cloud.svg) Climate Moisture Index (CMI) at `\(t_{i-1}\)` 
 
-&lt;br&gt;
-&gt; ![:scale 1.1em](images/fire.svg) Natural disturbances between `\(t_{i-1}\)` and `\(t_{i}\)`
-
-&gt; ![:scale 1.2em](images/stump.svg) Logging between `\(t_{i-1}\)` and `\(t_{i}\)`
 
 &lt;br&gt;
 &gt; ![:scale 1.1em](images/soil.svg) Soil pH
 
 &gt; ![:faic](tint) Soil drainage
 
+&lt;br&gt;
+&gt; ![:scale 1.1em](images/fire.svg) Natural disturbances between `\(t_{i-1}\)` and `\(t_{i}\)`
+
+&gt; ![:scale 1.2em](images/stump.svg) Logging between `\(t_{i-1}\)` and `\(t_{i}\)`
+
 ]
 
----
-## Model
-
-###### Intensity matrice Q containing instantaneous transition risks (row to columns)
-
-&lt;img src="index_qcbs19_files/figure-html/qmatrix-1.png" width="360" style="display: block; margin: auto;" /&gt;
-
-&lt;br&gt;
-**All transtions among all states except to Pioneer:**
-
-`$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climate} + \beta_{p} \times \textbf{disturbance} + \beta_{s} \times \textbf{soil})$$`
-
-**Transitions to Pioneer:**
-
-`$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{disturbance})$$`
 
 ---
 ## Observed transitions
 
 &lt;img src="index_qcbs19_files/figure-html/trans_diag-1.png" width="828" style="display: block; margin: auto;" /&gt;
-
-
-
-
 
 
 
@@ -273,48 +271,41 @@ Convergence time ![:faic](arrow-right) time to reach 90% of the equilibrium
 ## Conclusions
 
 &lt;br&gt;
-&gt; .image-holder[ ![:scale 1.2em](images/one.svg) What are the trends in recent forest transition dynamics? ]
+.image-holder[ ![:scale 1.2em](images/one.svg) What are the trends in recent forest transition dynamics? ]
 
-.alert[Possibly, but hardly with no disturbances.]
+&gt; .alert[Strong regeneration of boreal forests in response to disturbances in the 70s.]
 
-&gt; .image-holder[ ![:scale 1.2em](images/two.svg) How do disturbances influence the transition probabilities among forest states? ]
+&gt; .alert[Conversion from mixed to temperate stands in response to climate change.]
 
-.alert[Yes. Moderate disturbances, not major, favour Mixed-Temperate and Boreal-Mixed transitions.]
+&lt;br&gt;
+.image-holder[ ![:scale 1.2em](images/two.svg) How do disturbances influence the transition probabilities among forest states? ]
 
-&gt; .image-holder[ ![:scale 1.2em](images/three.svg) What is the impact of different disturbance intensities on the potential equilibrium and transient dynamics?]
+&gt; .alert[Yes. Moderate disturbances, not major, favour Mixed-Temperate transitions.]
 
-.alert[Moderate disturbances, not major, tend to increase the proportion of Temperate at equilibrium, moving the ecotone northward.]
+&lt;br&gt;
+.image-holder[ ![:scale 1.2em](images/three.svg) What is the impact of different disturbance intensities on the potential equilibrium and transient dynamics?]
 
-.alert[Moderate disturbances, not major, accelerate transient dynamics.]
+&gt; .alert[Moderate disturbances, not major, tend to increase the proportion of Temperate at equilibrium, moving the ecotone northward.]
+
+&gt; .alert[Moderate disturbances, not major, accelerate transient dynamics.]
 
 
 ---
-## Conclusions
+## Ecological and management implications
 
-États alternatifs stables ***sans*** changements climatiques
-
-&lt;br&gt;
-
-.center[
-![:scale 80%](images/ballncup1.png)
-]
-
----
-## Conclusions
-
-États alternatifs stables ***avec*** changements climatiques
-
-&lt;br&gt;
+&gt; So... 
+&gt; &lt;br&gt;
+&gt; Should we cut down trees to accelerate forest transitions?
 
 .center[
-![:scale 80%](images/ballncup2.png)
+![:scale 80%](images/aerial_view_log.png)
 ]
 
 
 
 
 ---
-## Résultats du modèle msm
+## Multi-state model results
 
 &lt;img src="index_qcbs19_files/figure-html/coef-1.png" width="684" style="display: block; margin: auto;" /&gt;
     </textarea>
