@@ -1,6 +1,8 @@
 ---
-title: "Les perturbations modérées catalysent les transitions forestières dans l’écotone boréal-tempéré"
-author: "Marie-Hélène Brice, Pierre Legendre & Marie-Josée Fortin"
+title: "Contraintes et moteurs de la dynamique de transition des forêts du Québec"
+subtitle: "Marie-Hélène Brice"
+author: Pierre Legendre, Marie-Josée Fortin <br/> [<i class="fa fa-github" aria-hidden="true"></i> github.com/mhBrice/talk_transition](https://github.com/mhBrice/talk_transition)
+
 
 output:
   xaringan::moon_reader:
@@ -39,7 +41,11 @@ source("funs.R")
 
 ```{r data, include = FALSE}
 msm_glb <- readRDS("data/msm_glb.RDS")
-states_ba <- readRDS("data/states_envba.RDS") %>% arrange(plot_id, year_measured)
+states_ba <- readRDS("data/states_envba.RDS") %>% 
+  arrange(plot_id, year_measured) %>% 
+  na.omit() %>%
+  group_by(ID_PE) %>% filter(n() > 1) %>% ungroup()
+
 
 env_sc <- scale(states_ba[,c("sTP", "sCMI", "DRAIN", "PH_HUMUS")])
 
@@ -56,7 +62,7 @@ covar_log <- list(mixed_mean,
 ```
 
 
-## Déplacement des niches
+## Déplacement des niches climatiques
 
 Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
@@ -72,8 +78,9 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 - Démographie lente
 - Dispersion limitée
-- Compétition interspécifique
 - Hétérogénéité du sol
+- Compétition interspécifique
+
 
 .center[![:scale 87%](images/niche_vs_tree.png)]
 
@@ -82,15 +89,8 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 
 <br>
 
-.pull-left[
-![](images/alternative_state1.png)]
-
-.pull-right[
-![](images/alternative_state2.png)]
-
-<br>
-
-.center[![:scale 80%](images/alternative_state_legend.png)]
+.center[
+![](images/etat_alternatif.png)]
 
 .footnote[Johnstone et al. 2016]
 
@@ -99,12 +99,12 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ## ![:scale 1.1em](images/target.svg)bjectifs
 
 
-**Comprendre les contraintes et les moteurs sous-jacents de la dynamique de transition des communautés forestières du Québec.**
+**Comprendre les contraintes et les moteurs qui influencent la dynamique de transition des communautés forestières du Québec.**
 
 
-> .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
+> .image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances de la dynamique de transition récente des forêts ?  ]
 >
-> .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent favoriser certaines transitions? ]
+> .image-holder[ ![:scale 1.2em](images/two.svg) Comment les perturbations influencent-elles les probabilités de transition entre les états forestiers ? ]
 >
 > .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre potentiel et la dynamique transitoire ? ]
 
@@ -137,11 +137,11 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 ]
 
 ---
-## Données
+## Données des inventaires forestiers
 
 Inventaires forestiers du Québec Méridional 	
-  - 12000+ parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2016 (par le MFFPQ)
-  - Sélection de 10,388 parcelles inventoriées au moins 2 fois chacune
+  - 12000+ parcelles permanentes échantillonnées durant 5 grands inventaires entre 1970 et 2018 (par le MFFPQ)
+  - Sélection de 11058 parcelles inventoriées au moins 2 fois chacune
 
 
 .center[
@@ -151,10 +151,10 @@ Inventaires forestiers du Québec Méridional
 
 
 ---
-## Données
+## Données des inventaires forestiers
 
 .center[
-![:scale 85%](images/diag_trans_pics.png)
+![:scale 90%](images/diag_trans_pics_fr.png)
 ]
 
 
@@ -271,28 +271,6 @@ trans_nb <- statetable.msm(states_num, plot_id, data = states_ba)
 rownames(trans_nb) <- colnames(trans_nb) <- states
 trans_perc <- t(round(trans_nb/rowSums(trans_nb)*100, 1))
 
-# pos.box <- cbind (c(0.5, 0.15, 0.85, 0.5),
-#                   c(0.85, 0.5, 0.5, 0.15))
-# 
-# par(mar=c(0.5,0.5,0.5,0.5))
-# 
-# pm <- plotmat(trans_perc, pos = pos.box, curve = 0.07, name = states,
-#               lwd = 2, relsize = .9, box.cex = 1.8,
-#               cex.txt = 0, txt.col = "white", dtext = .45, txt.font = 2,
-#               box.lwd = 0.1, box.type = "rect", shadow.size = 0.005,
-#               box.prop = 0.4, box.size = 0.105, box.col = st_col,
-#               arr.length=.15, arr.width=.2,  arr.type ="triangle",
-#               arr.col ="grey40", arr.lcol = "grey40",
-#               self.cex = 0.65, self.lwd = 2,
-#               self.shifty = c(.07,0,0,-.07), self.shiftx = c(0,-.14,.14,0),
-#               self.arrpos = c(-1,0,3,.5))
-# 
-# pm$arr$TextX[5] <- pm$arr$TextX[5]-.01
-# pm$arr$TextX[10] <- pm$arr$TextX[10]+.01
-# pm$arr$TextX[6] <- pm$arr$TextX[6]-.015
-# pm$arr$TextX[11] <- pm$arr$TextX[11]+.02
-# text(pm$arr$TextX, pm$arr$TextY, paste0(pm$arr$Value, "%"), cex = 1.4, font = 2)
-
 arr_l <- trans_perc/40
 diag(arr_l) <- 0
 col_txt <- as.vector(ifelse(arr_l==0, "white", "black"))
@@ -401,15 +379,22 @@ plot_pmat(mod = msm_glb, covariates = covar_log[[3]])
 
 <br>
 ```{r prep_barplot, fig.width=8, fig.height=5}
-init <- table(states_ba$states_ba[states_ba$year_measured>30])
+init <- states_ba %>% filter(ecoreg3 == "Mixed") %>%
+  group_by(ID_PE) %>% 
+  arrange(year_measured) %>% 
+  slice(1) 
+init <- table(init$states_ba)
 init <- init/sum(init)
 
-dl <- list(list(logging1 = 0), list(logging1 = 1), list(logging2 = 1))
+dl <- list(list(mixed_mean, logging1 = 0), 
+           list(mixed_mean, logging1 = 1), 
+           list(mixed_mean, logging2 = 1))
 qmats <- lapply(dl, function(x)
   qmatrix.msm(msm_glb, covariates = x, ci = "none"))
 
 SS <- lapply(qmats, function(x) steady_state(qmat = x))
 SS <- rbind(init, do.call(rbind, SS))
+
 
 colss <- c("#2c7b8f", "#f1ba53","#E38451", "#b5305d")
 lgd <- c("Proportion initiale réelle", 
@@ -576,22 +561,46 @@ barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850))
 ## Conclusions
 
 <br>
-> .image-holder[ ![:scale 1.2em](images/one.svg) Est-ce que la dynamique de transitions des forêts est influencée par le changement climatique récent? ]
+.image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances de la dynamique de transition récente des forêts ?  ]
 
-.alert[Possiblement, mais difficilement sans perturbations.]
+> .alert[Forte régénération des forêts boréales en réponse aux perturbations des années 70.]
 
-> .image-holder[ ![:scale 1.2em](images/two.svg) Est-ce que les perturbations peuvent favoriser certaines transitions? ]
+> .alert[Conversion de peuplements mixtes en peuplements tempérés potentiellement en réponse au changement climatique.]
 
-.alert[Oui. Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré et Boréal-Mixte.]
+.image-holder[ ![:scale 1.2em](images/two.svg) Comment les perturbations influencent-elles les probabilités de transition entre les états forestiers ? ]
 
-> .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre et la dynamique transitoire ?]
+> .alert[Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré.]
 
-.alert[Les perturbations modérées, pas majeures, tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord.]
+.image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre et la dynamique transitoire ?]
 
-.alert[Les perturbations modérées, pas majeures, accélèrent la dynamique transitoire.]
+> .alert[Les perturbations modérées, pas majeures, tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord.]
 
+> .alert[Les perturbations modérées, pas majeures, accélèrent la dynamique transitoire.]
 
+---
+## Implications pour les mesures d'adaptation
 
+> Alors... 
+> <br>
+> Devrions-nous abattre des arbres pour accélérer les transitions forestières ?
+
+.center[
+![:scale 80%](images/aerial_view_log.png)
+]
+
+---
+## Implications pour les mesures d'adaptation
+
+.center[
+![:scale 80%](images/fig_demo_trans.png)
+]
+
+---
+## Implications pour les mesures d'adaptation
+
+.center[
+![:scale 80%](images/fig_demo_trans2.png)
+]
 ---
 ## Conclusions
 

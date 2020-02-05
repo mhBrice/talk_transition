@@ -178,9 +178,7 @@ a, a > code {
 /* Inverted slide */
 
 .inverse {
-  border-left: 5px solid #f3f3f3;
-  border-right: 5px solid #f3f3f3;
-  background-color: #32454f;
+  background-image: url("images/background_inverse.png");
   color: #f3f3f3;
 }
 
