@@ -92,7 +92,7 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 .center[
 ![](images/etat_alternatif.png)]
 
-.footnote[Johnstone et al. 2016]
+.footnote[Johnstone et al. 2016. Frontiers in Ecology and the Environment.]
 
 
 ---
@@ -102,21 +102,21 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 **Comprendre les contraintes et les moteurs qui influencent la dynamique de transition des communautés forestières du Québec.**
 
 
-> .image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances de la dynamique de transition récente des forêts ?  ]
+> .image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances récentes dans la dynamique de transition ?  ]
 >
 > .image-holder[ ![:scale 1.2em](images/two.svg) Comment les perturbations influencent-elles les probabilités de transition entre les états forestiers ? ]
 >
 > .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre potentiel et la dynamique transitoire ? ]
+>
+> .image-holder[ ![:scale 1.2em](images/four.svg) Quelle est l'importance relative des processus démographiques sous-jacents à la dynamique de transition ? ]
 
-
-<br>
 
 .center[.image-holder[
-![:scale 230px](images/mixed.jpg)
+![:scale 220px](images/mixed.jpg)
 ![:scale 40px](images/right-arrow.svg)
-![:scale 230px](images/pioneer.jpg)
+![:scale 220px](images/pioneer.jpg)
 ![:scale 40px](images/right-arrow.svg)
-![:scale 230px](images/temperate.jpg)
+![:scale 220px](images/temperate.jpg)
 ]]
 
 
@@ -151,31 +151,44 @@ Inventaires forestiers du Québec Méridional
 
 
 ---
-## Données des inventaires forestiers
+## Classification en 4 états forestiers
 
 .center[
 ![:scale 90%](images/diag_trans_pics_fr.png)
 ]
 
+---
+## Classification en 4 états forestiers
+
+
+.center[
+![:scale 80%](images/indval_states.png)]
 
 ---
-## Modèle
+## Dynamique de transition en 4 états
 
-##### Modèle de Markov multi-états à temps continu
+.center[
+![:scale 100%](images/ex_transition.png)
+]
 
-```{r trans_time, fig.width=6.6, fig.height=3.3}
+
+---
+## Modèle de Markov multi-états à temps continu
+
+
+```{r trans_time, fig.width=6, fig.height=2.4}
 pos <- coordinates(pos = 4)
 pos[,1] <- pos[,1] + c(-.015,0.025,-.01,0)
 labs <- c(expression(bold('État'[0])),
           expression(bold('État'[1])),
           expression(bold('État'["..."])),
           expression(bold('État'["n"])))
-curv <- c(-0.6, -0.8, -0.7)
+curv <- c(-0.7, -0.95, -0.8)
 
 par(mar=c(0,0,0,0))
 openplotmat(main = "")
 for (i in 1:4) {
-  textellipse(mid=pos[i,], radx = 0.1, lab = labs[i], cex = 2,
+  textellipse(mid=pos[i,], radx = 0.105, lab = labs[i], cex = 1.7,
               col = '#404940', shadow.col='#98B283', shadow.size = 0.005)
   }
 for (i in 1:3) {
@@ -186,24 +199,63 @@ for (i in 1:3) {
 straightarrow(from = pos[1, ] - c(0, .22), to = pos[4, ] - c(0, .22),
               arr.type = "triangle", arr.pos = 1, lwd = 15, lcol ="grey60", arr.col ="grey60",
               arr.length=.7, arr.width=.7)
-textplain(pos[4, ] - c(0, .35), lab = "Time", cex = 2)
+textplain(pos[4, ] - c(0, .35), lab = "Temps", cex = 1.7)
 ```
 
-- Processus de Markov: 
-  - Les transitions dépendent de l'état actuel, pas des états antérieurs
+.center[
+.large[![:faic](arrow-down)]
 
-- Temps continu: 
-  - Intervalle de temps irrégulier; 
-  - Plusieurs transitions possibles durant un intervalle;
-  - Le moment exact de la transition n'est pas connu
+.small[Nous modélisons la matrice d'intensité **Q** contenant les risques de transition instantanée entre les états (ligne à colonne) en fonction de variables environnementales.]
+]
+
+
+```{r qmatrix, fig.height=3, fig.width=11}
+qmat <- c("$-\\sum_{s \\neq B} q_{Bs}$","q_{BM}", "q_{BP}", 0,
+          "q_{MB}", "$-\\sum_{s \\neq M} q_{Ms}$", "q_{MP}", "q_{MT}",
+          "q_{PB}", "q_{PM}", "$-\\sum_{s \\neq P} q_{Ps}$", "q_{PT}",
+          0, "q_{TM}", "q_{TP}", "$-\\sum_{s \\neq T} q_{Ts}$")
+layout(matrix(1:2, 1), widths = c(.7,1))
+par(mar=c(0,0,0,0))
+plot0(xlim = c(0,9), ylim = c(1,9), xpd = NA, yaxs = "i")
+text(.2, 5, expression(paste(bold("Q")," =")), cex = 2, col = '#404940')
+lines(c(1,1), c(1.5,8.5))
+lines(c(9,9), c(1.5,8.5))
+text(rep(c(2,4,6,8),4),rep(c(8,6,4,2),ea=4), TeX(qmat), cex = 1.5, col = '#404940')
+
+par(mar=c(0,.2,0,0))
+plot0(0:5)
+text(2.5,4.3, "Pour les transtions entre tous les états sauf vers Pionnier:", 
+     cex = 1.4, font=2, col = '#404940')
+text(2.5,3.3, expression(atop(q[rs]==baseline%*%exp(beta[c]%*%climat+beta[s]%*%sol+beta[p]%*%perturbation))), cex = 1.4, adj = 0.5, col = '#404940')
+
+text(2.5, 2.3, "Pour les transitions vers Pionnier:", cex = 1.4, font=2, col = '#404940')
+text(2.5,1.3, expression(atop(q[rs]==baseline%*%exp(beta[p]%*%perturbation))), 
+     cex = 1.4, adj = .5, col = '#404940')
+```
+
+
 
 ---
-## Modèle
+## Modèle de Markov multi-états à temps continu
 
-##### Modèle de Markov multi-états à temps continu
+```{r trans_time2, fig.width=6, fig.height=2.4}
 
-<br>
-Les transitions entre les états peuvent dépendre de l'environnement:
+par(mar=c(0,0,0,0))
+openplotmat(main = "")
+for (i in 1:4) {
+  textellipse(mid=pos[i,], radx = 0.105, lab = labs[i], cex = 1.7,
+              col = '#404940', shadow.col='#98B283', shadow.size = 0.005)
+  }
+for (i in 1:3) {
+  curvedarrow(from = pos[i, ] + c(.01, .12), to = pos[i+1, ] + c(-.01, .12),
+              curve = curv[i], arr.type = "triangle", arr.length=.4, arr.width=.5,
+              arr.pos = .5, lwd = 4, lcol ="grey40", arr.col ="grey40")}
+
+straightarrow(from = pos[1, ] - c(0, .22), to = pos[4, ] - c(0, .22),
+              arr.type = "triangle", arr.pos = 1, lwd = 15, lcol ="grey60", arr.col ="grey60",
+              arr.length=.7, arr.width=.7)
+textplain(pos[4, ] - c(0, .35), lab = "Temps", cex = 1.7)
+```
 
 .left-column[
 <br>
@@ -211,11 +263,11 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 
 <br><br>
 
-**Perturbations**
+**Sol**
 
 <br><br>
 
-**Sol**
+**Perturbations**
 ]
 
 .right-column[
@@ -224,44 +276,17 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 > ![:scale 1.1em](images/cloud.svg) Indice d'humidité climatique (CMI) à $t_{i-1}$ 
 
 <br>
-> ![:scale 1.1em](images/fire.svg) Perturbations naturelles entre $t_{i-1}$ et $t_{i}$
-
-> ![:scale 1.2em](images/stump.svg) Coupes entre $t_{i-1}$ et $t_{i}$
-
-<br>
 > ![:scale 1.1em](images/soil.svg) pH du sol
 
 > ![:faic](tint) Drainage du sol
 
+<br>
+> ![:scale 1.1em](images/fire.svg) Sévérité de perturbations naturelles entre $t_{i-1}$ et $t_{i}$
+
+> ![:scale 1.2em](images/stump.svg) Sévérité de coupes entre $t_{i-1}$ et $t_{i}$
+
 ]
 
----
-## Modèle
-
-###### Matrice d'intensité Q contenant les risques de transition instantanés (ligne à colonne)
-
-```{r qmatrix, fig.height=3, fig.width=5}
-qmat <- c("$-\\sum_{s \\neq B} q_{Bs}$","q_{BM}", "q_{BP}", 0,
-          "q_{MB}", "$-\\sum_{s \\neq M} q_{Ms}$", "q_{MP}", "q_{MT}",
-          "q_{PB}", "q_{PM}", "$-\\sum_{s \\neq P} q_{Ps}$", "q_{PT}",
-          0, "q_{TM}", "q_{TP}", "$-\\sum_{s \\neq T} q_{Ts}$")
-
-par(mar=c(0,0,0,0))
-plot0(xlim = c(0,9), ylim = c(1,9), xpd = NA, yaxs = "i")
-text(.2, 5, expression(paste(bold("Q")," =")), cex = 2, col = '#404940')
-lines(c(1,1), c(1.5,8.5))
-lines(c(9,9), c(1.5,8.5))
-text(rep(c(2,4,6,8),4),rep(c(8,6,4,2),ea=4), TeX(qmat), cex = 1.5, col = '#404940')
-```
-
-<br>
-**Pour les transtions entre tous les états sauf vers Pionnier:**
-
-$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climat} + \beta_{p} \times \textbf{perturbation} + \beta_{s} \times \textbf{sol})$$
-
-**Pour les transitions vers Pionnier:**
-
-$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{perturbation})$$
 
 ---
 ## Transitions observées
@@ -558,24 +583,67 @@ barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850))
 ```
 
 ---
+## Processus démographiques sous-jacents
+
+.center[
+![:scale 80%](images/fig_demo_trans.png)
+]
+
+---
+## Processus démographiques sous-jacents
+
+.center[
+![:scale 80%](images/fig_demo_trans2.png)
+]
+
+---
 ## Conclusions
 
-<br>
-.image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances de la dynamique de transition récente des forêts ?  ]
+.small[
+.image-holder[ ![:scale 1.2em](images/one.svg) Tendances de la dynamique de transition ]
 
 > .alert[Forte régénération des forêts boréales en réponse aux perturbations des années 70.]
 
 > .alert[Conversion de peuplements mixtes en peuplements tempérés potentiellement en réponse au changement climatique.]
+]
 
-.image-holder[ ![:scale 1.2em](images/two.svg) Comment les perturbations influencent-elles les probabilités de transition entre les états forestiers ? ]
+--
 
-> .alert[Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré.]
+.small[
+.image-holder[ ![:scale 1.2em](images/two.svg) Influence des perturbations sur les probabilités de transition ]
 
-.image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre et la dynamique transitoire ?]
+> .alert[Les perturbations modérées favorisent les transitions Mixte-Tempéré.]
 
-> .alert[Les perturbations modérées, pas majeures, tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord.]
+]
 
-> .alert[Les perturbations modérées, pas majeures, accélèrent la dynamique transitoire.]
+--
+
+.small[
+.image-holder[ ![:scale 1.2em](images/three.svg) Influence des perturbations sur l'équilibre et la dynamique transitoire]
+
+> .alert[Les perturbations modérées tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord, et accélèrent ces changements.]
+]
+
+--
+
+.small[
+.image-holder[ ![:scale 1.2em](images/four.svg) Importance relative des processus démographiques]
+
+> .alert[Les transitions Mixte à Tempéré sont principalement associées à la mortalité de *Abies balsamea* et à la croissance des espèces tempérées.]
+]
+
+---
+class: inverse, center, middle
+
+# Merci!
+
+---
+## Résultats du modèle msm
+
+```{r coef, fig.width=9.5, fig.height=7.6}
+plot_risk(msm_glb)
+```
+
 
 ---
 ## Implications pour les mesures d'adaptation
@@ -588,23 +656,11 @@ barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850))
 ![:scale 80%](images/aerial_view_log.png)
 ]
 
----
-## Implications pour les mesures d'adaptation
-
-.center[
-![:scale 80%](images/fig_demo_trans.png)
-]
 
 ---
-## Implications pour les mesures d'adaptation
+## États alternatifs stables
 
-.center[
-![:scale 80%](images/fig_demo_trans2.png)
-]
----
-## Conclusions
-
-États alternatifs stables ***sans*** changements climatiques
+***Sans*** changements climatiques
 
 <br>
 
@@ -613,9 +669,9 @@ barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850))
 ]
 
 ---
-## Conclusions
+## États alternatifs stables
 
-États alternatifs stables ***avec*** changements climatiques
+***Avec*** changements climatiques
 
 <br>
 
@@ -626,11 +682,5 @@ barplot_halflife(index = halflife, bars = 1:3, ylim = c(0, 850))
 
 
 
----
-## Résultats du modèle msm
-
-```{r coef, fig.width=9.5, fig.height=7.6}
-plot_risk(msm_glb)
-```
 
 

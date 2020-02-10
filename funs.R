@@ -25,6 +25,78 @@ plot_pmat <- function(mod, covariates = 0) {
   text(pm$arr$TextX, pm$arr$TextY, pm$arr$Value, cex = 1.5)
 }
 
+#### Function to plot transition matrix ####
+
+plot_trans <- function(pmat, cols = c("#FDF7F7", "red3", "#060000"), 
+                       states_lab = NULL, labels = FALSE, main = NULL) {
+  
+  col <- colorRampPalette(cols)(200)
+
+  if(is.null(states_lab)) states_lab = colnames(tr)
+  
+  n <- nrow(pmat)
+  
+  # Plot matrix
+  image2(pmat, col = col, border = "white", lwd = 2)
+  
+  # Axis labels
+  coordx <- seq(0, 1, len = n)
+  coordy <- rev(coordx)
+  axis(3, at = coordx, labels = states_lab, font = 2, 
+       tick = FALSE, cex.axis = .93, line = -1, col.axis = "grey15", xpd = NA)
+  axis(2, at = coordy, labels = states_lab, font = 2, 
+       tick = FALSE, cex.axis = .93, las = 1, line = -.8, col.axis = "grey15", xpd = NA)
+  if(labels) {
+    mtext("De", 2, font = 3, at = 1.1, las = 1, line = 1.7, cex = 1)
+    mtext("Vers", 3, font = 3, at = -.2, line = 1.3, cex = 1)
+  }
+  
+  # Main
+  mtext(main, 3, line = 1.7, font = 1, cex = .85)
+  
+  # Probabilities
+  for(i in 1:n) {
+      text(x = coordx, y = coordy[i], labels = round(pmat[i,], 2), 
+           col = ifelse(pmat[i,]<=6, "black", "white"), cex = 1.2, xpd = NA)
+  }
+  
+}
+
+### Curly braces ####
+# copy from https://stackoverflow.com/questions/23869526/plot-curly-bracket-for-axes-area
+
+CurlyBraces <- function(x0, x1, y0, y1, pos = 1, direction = 1, depth = 1) {
+  
+  a=c(1,2,3,48,50)    # set flexion point for spline
+  b=c(0,.2,.28,.7,.8) # set depth for spline flexion point
+  
+  curve = spline(a, b, n = 50, method = "natural")$y * depth
+  
+  curve = c(curve,rev(curve))
+  
+  if (pos == 1){
+    a_sequence = seq(x0,x1,length=100)
+    b_sequence = seq(y0,y1,length=100)  
+  }
+  if (pos == 2){
+    b_sequence = seq(x0,x1,length=100)
+    a_sequence = seq(y0,y1,length=100)      
+  }
+  
+  # direction
+  if(direction==1)
+    a_sequence = a_sequence+curve
+  if(direction==2)
+    a_sequence = a_sequence-curve
+  
+  # pos
+  if(pos==1)
+    lines(a_sequence,b_sequence, lwd=1.5,   xpd=NA) # vertical
+  if(pos==2)
+    lines(b_sequence,a_sequence, lwd=1.5, xpd=NA) # horizontal
+  
+}
+
 
 #### function to plot risk ratio ####
 

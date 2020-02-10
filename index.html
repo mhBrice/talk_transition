@@ -58,7 +58,7 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 .center[
 ![](images/etat_alternatif.png)]
 
-.footnote[Johnstone et al. 2016]
+.footnote[Johnstone et al. 2016. Frontiers in Ecology and the Environment.]
 
 
 ---
@@ -68,21 +68,21 @@ Future enveloppe climatique de l'Érable à sucre (2071-2100)
 **Comprendre les contraintes et les moteurs qui influencent la dynamique de transition des communautés forestières du Québec.**
 
 
-&gt; .image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances de la dynamique de transition récente des forêts ?  ]
+&gt; .image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances récentes dans la dynamique de transition ?  ]
 &gt;
 &gt; .image-holder[ ![:scale 1.2em](images/two.svg) Comment les perturbations influencent-elles les probabilités de transition entre les états forestiers ? ]
 &gt;
 &gt; .image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre potentiel et la dynamique transitoire ? ]
+&gt;
+&gt; .image-holder[ ![:scale 1.2em](images/four.svg) Quelle est l'importance relative des processus démographiques sous-jacents à la dynamique de transition ? ]
 
-
-&lt;br&gt;
 
 .center[.image-holder[
-![:scale 230px](images/mixed.jpg)
+![:scale 220px](images/mixed.jpg)
 ![:scale 40px](images/right-arrow.svg)
-![:scale 230px](images/pioneer.jpg)
+![:scale 220px](images/pioneer.jpg)
 ![:scale 40px](images/right-arrow.svg)
-![:scale 230px](images/temperate.jpg)
+![:scale 220px](images/temperate.jpg)
 ]]
 
 
@@ -117,35 +117,48 @@ Inventaires forestiers du Québec Méridional
 
 
 ---
-## Données des inventaires forestiers
+## Classification en 4 états forestiers
 
 .center[
 ![:scale 90%](images/diag_trans_pics_fr.png)
 ]
 
+---
+## Classification en 4 états forestiers
+
+
+.center[
+![:scale 80%](images/indval_states.png)]
 
 ---
-## Modèle
+## Dynamique de transition en 4 états
 
-##### Modèle de Markov multi-états à temps continu
+.center[
+![:scale 100%](images/ex_transition.png)
+]
 
-&lt;img src="index_files/figure-html/trans_time-1.png" width="475.2" style="display: block; margin: auto;" /&gt;
-
-- Processus de Markov: 
-  - Les transitions dépendent de l'état actuel, pas des états antérieurs
-
-- Temps continu: 
-  - Intervalle de temps irrégulier; 
-  - Plusieurs transitions possibles durant un intervalle;
-  - Le moment exact de la transition n'est pas connu
 
 ---
-## Modèle
+## Modèle de Markov multi-états à temps continu
 
-##### Modèle de Markov multi-états à temps continu
 
-&lt;br&gt;
-Les transitions entre les états peuvent dépendre de l'environnement:
+&lt;img src="index_files/figure-html/trans_time-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+.center[
+.large[![:faic](arrow-down)]
+
+.small[Nous modélisons la matrice d'intensité **Q** contenant les risques de transition instantanée entre les états (ligne à colonne) en fonction de variables environnementales.]
+]
+
+
+&lt;img src="index_files/figure-html/qmatrix-1.png" width="792" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+## Modèle de Markov multi-états à temps continu
+
+&lt;img src="index_files/figure-html/trans_time2-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 .left-column[
 &lt;br&gt;
@@ -153,11 +166,11 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 
 &lt;br&gt;&lt;br&gt;
 
-**Perturbations**
+**Sol**
 
 &lt;br&gt;&lt;br&gt;
 
-**Sol**
+**Perturbations**
 ]
 
 .right-column[
@@ -166,32 +179,17 @@ Les transitions entre les états peuvent dépendre de l'environnement:
 &gt; ![:scale 1.1em](images/cloud.svg) Indice d'humidité climatique (CMI) à `\(t_{i-1}\)` 
 
 &lt;br&gt;
-&gt; ![:scale 1.1em](images/fire.svg) Perturbations naturelles entre `\(t_{i-1}\)` et `\(t_{i}\)`
-
-&gt; ![:scale 1.2em](images/stump.svg) Coupes entre `\(t_{i-1}\)` et `\(t_{i}\)`
-
-&lt;br&gt;
 &gt; ![:scale 1.1em](images/soil.svg) pH du sol
 
 &gt; ![:faic](tint) Drainage du sol
 
+&lt;br&gt;
+&gt; ![:scale 1.1em](images/fire.svg) Sévérité de perturbations naturelles entre `\(t_{i-1}\)` et `\(t_{i}\)`
+
+&gt; ![:scale 1.2em](images/stump.svg) Sévérité de coupes entre `\(t_{i-1}\)` et `\(t_{i}\)`
+
 ]
 
----
-## Modèle
-
-###### Matrice d'intensité Q contenant les risques de transition instantanés (ligne à colonne)
-
-&lt;img src="index_files/figure-html/qmatrix-1.png" width="360" style="display: block; margin: auto;" /&gt;
-
-&lt;br&gt;
-**Pour les transtions entre tous les états sauf vers Pionnier:**
-
-`$$q_{rs} = \textbf{baseline} \times exp(\beta_{c} \times \textbf{climat} + \beta_{p} \times \textbf{perturbation} + \beta_{s} \times \textbf{sol})$$`
-
-**Pour les transitions vers Pionnier:**
-
-`$$q_{rs} = \textbf{baseline} \times exp(\beta_{p} \times \textbf{perturbation})$$`
 
 ---
 ## Transitions observées
@@ -305,24 +303,65 @@ Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équili
 &lt;img src="index_files/figure-html/barplot_tr2-1.png" width="792" style="display: block; margin: auto;" /&gt;
 
 ---
+## Processus démographiques sous-jacents
+
+.center[
+![:scale 80%](images/fig_demo_trans.png)
+]
+
+---
+## Processus démographiques sous-jacents
+
+.center[
+![:scale 80%](images/fig_demo_trans2.png)
+]
+
+---
 ## Conclusions
 
-&lt;br&gt;
-.image-holder[ ![:scale 1.2em](images/one.svg) Quelles sont les tendances de la dynamique de transition récente des forêts ?  ]
+.small[
+.image-holder[ ![:scale 1.2em](images/one.svg) Tendances de la dynamique de transition ]
 
 &gt; .alert[Forte régénération des forêts boréales en réponse aux perturbations des années 70.]
 
 &gt; .alert[Conversion de peuplements mixtes en peuplements tempérés potentiellement en réponse au changement climatique.]
+]
 
-.image-holder[ ![:scale 1.2em](images/two.svg) Comment les perturbations influencent-elles les probabilités de transition entre les états forestiers ? ]
+--
 
-&gt; .alert[Les perturbations modérées, pas majeures, favorisent les transitions Mixte-Tempéré.]
+.small[
+.image-holder[ ![:scale 1.2em](images/two.svg) Influence des perturbations sur les probabilités de transition ]
 
-.image-holder[ ![:scale 1.2em](images/three.svg) Quel est l'impact de différentes intensités de perturbation sur l'équilibre et la dynamique transitoire ?]
+&gt; .alert[Les perturbations modérées favorisent les transitions Mixte-Tempéré.]
 
-&gt; .alert[Les perturbations modérées, pas majeures, tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord.]
+]
 
-&gt; .alert[Les perturbations modérées, pas majeures, accélèrent la dynamique transitoire.]
+--
+
+.small[
+.image-holder[ ![:scale 1.2em](images/three.svg) Influence des perturbations sur l'équilibre et la dynamique transitoire]
+
+&gt; .alert[Les perturbations modérées tendent à faire augmenter la proportion de Tempéré à l'équilibre, déplaçant l'écotone vers le nord, et accélèrent ces changements.]
+]
+
+--
+
+.small[
+.image-holder[ ![:scale 1.2em](images/four.svg) Importance relative des processus démographiques]
+
+&gt; .alert[Les transitions Mixte à Tempéré sont principalement associées à la mortalité de *Abies balsamea* et à la croissance des espèces tempérées.]
+]
+
+---
+class: inverse, center, middle
+
+# Merci!
+
+---
+## Résultats du modèle msm
+
+&lt;img src="index_files/figure-html/coef-1.png" width="684" style="display: block; margin: auto;" /&gt;
+
 
 ---
 ## Implications pour les mesures d'adaptation
@@ -335,23 +374,11 @@ Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équili
 ![:scale 80%](images/aerial_view_log.png)
 ]
 
----
-## Implications pour les mesures d'adaptation
-
-.center[
-![:scale 80%](images/fig_demo_trans.png)
-]
 
 ---
-## Implications pour les mesures d'adaptation
+## États alternatifs stables
 
-.center[
-![:scale 80%](images/fig_demo_trans2.png)
-]
----
-## Conclusions
-
-États alternatifs stables ***sans*** changements climatiques
+***Sans*** changements climatiques
 
 &lt;br&gt;
 
@@ -360,23 +387,15 @@ Temps de convergence ![:faic](arrow-right) temps pour atteindre 90% de l'équili
 ]
 
 ---
-## Conclusions
+## États alternatifs stables
 
-États alternatifs stables ***avec*** changements climatiques
+***Avec*** changements climatiques
 
 &lt;br&gt;
 
 .center[
 ![:scale 80%](images/ballncup2.png)
 ]
-
-
-
-
----
-## Résultats du modèle msm
-
-&lt;img src="index_files/figure-html/coef-1.png" width="684" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
